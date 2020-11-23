@@ -78,6 +78,29 @@ router.post('/register/student', (req, res, next) => {
     });
 });
 
+router.put('/register/student/:id', (req, res) => {
+  const queryText = `UPDATE "user" 
+  SET "username"= $1, "password"=$2, "phone_number"=$3, "instrument"=$4 
+  WHERE "id"=$5;`;
+  const queryArray = [
+    req.body.username,
+    encryptLib.encryptPassword(req.body.password),
+    req.body.phone,
+    req.body.instrument,
+    req.params.id,
+  ];
+
+  pool
+    .query(queryText, queryArray)
+    .then((response) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful
