@@ -6,6 +6,9 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
+// random key generator for temporary key when new student is added by teacher
+const randomNumber = require('../modules/randomKeyGenerator');
+
 const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
@@ -57,9 +60,10 @@ router.post('/register/student', (req, res, next) => {
   const phone = 0;
   const instrument = 'TBD';
   const accessLevel = 2;
+  const temporary_key = randomNumber();
 
-  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;`;
+  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id, temporary_key)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
   pool
     .query(queryText, [
       username,
@@ -70,6 +74,7 @@ router.post('/register/student', (req, res, next) => {
       phone,
       instrument,
       accessLevel,
+      temporary_key,
     ])
     .then((result) => {
       // result.rows[0].id is the returned ID from the first query
