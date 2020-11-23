@@ -49,13 +49,13 @@ router.post('/register/teacher', (req, res, next) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/student', (req, res, next) => {
-  const username = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
+  const username = 'TBD';
+  const password = 'TBD';
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const phone = req.body.phone;
-  const instrument = req.body.instrument;
+  const phone = 0;
+  const instrument = 'TBD';
   const accessLevel = 2;
 
   const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id)
