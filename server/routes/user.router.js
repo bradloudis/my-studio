@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-// Handles POST request with new user data
+// Handles POST request with new user data for TEACHER
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/teacher', (req, res, next) => {
@@ -36,6 +36,39 @@ router.post('/register/teacher', (req, res, next) => {
       lastName,
       email,
       phone,
+      accessLevel,
+    ])
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.log('User registration failed: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// Handles POST request with new user data for STUDENT
+// The only thing different from this and every other post we've seen
+// is that the password gets encrypted before being inserted
+router.post('/register/student', (req, res, next) => {
+  const username = req.body.username;
+  const password = encryptLib.encryptPassword(req.body.password);
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const instrument = req.body.instrument;
+  const accessLevel = 2;
+
+  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
+  pool
+    .query(queryText, [
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      phone,
+      instrument,
       accessLevel,
     ])
     .then(() => res.sendStatus(201))
