@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// MATERIAL UI
+import { Button } from '@material-ui/core';
+
 import './LandingPage.css';
 
 // CUSTOM COMPONENTS
@@ -60,9 +63,9 @@ class LandingPage extends Component {
 
             <center>
               <h4>Already a Member?</h4>
-              <button className="btn btn_sizeSm" onClick={this.onLogin}>
-                Login
-              </button>
+              <Button variant="contained" onClick={this.onLogin}>
+                LOGIN
+              </Button>
             </center>
           </div>
         </div>
