@@ -129,7 +129,7 @@ router.post('/register/student', (req, res, next) => {
 // Handles PUT request with updated user data for STUDENT (when they finish registration)
 router.put('/register/student/:id', (req, res) => {
   const queryText = `UPDATE "user" 
-  SET "username"= $1, "password"=$2, "phone_number"=$3, "instrument"=$4 
+  SET "username"= $1, "password"=$2, "phone_number"=$3, "instrument"=$4, "registration_status"='done' 
   WHERE "id"=$5;`;
   const queryArray = [
     req.body.username,

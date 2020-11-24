@@ -16,7 +16,7 @@ class RegisterForm extends Component {
     event.preventDefault();
 
     this.props.dispatch({
-      type: 'REGISTER',
+      type: 'REGISTER_TEACHER',
       payload: {
         username: this.state.username,
         password: this.state.password,
