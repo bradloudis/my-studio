@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // CUSTOM COMPONENTS
-import TeacherHomePage from '../TeacherHomePage/TeacherHomePage';
-import StudentHomePage from '../StudentHomePage/StudentHomePage';
+import TeacherHomePage from '../../components/TeacherHomePage/TeacherHomePage';
+import StudentHomePage from '../../components/StudentHomePage/StudentHomePage';
 
 class UserPage extends Component {
   // this component doesn't do much to start, just renders some user info to the DOM

@@ -13,8 +13,10 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
+// PAGES
+// -----------------
 import AboutPage from '../../pages/AboutPage/AboutPage';
-import UserPage from '../../pages/AboutPage/UserPage/UserPage';
+import UserPage from '../../pages/UserPage/UserPage';
 import InfoPage from '../../pages/InfoPage/InfoPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
