@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 
 class TeacherHomePage extends Component {
   render() {
-    return <h3>TEACHER</h3>;
+    return (
+      <div>
+        <h1>TEACHER</h1>
+        <h2>My Students</h2>
+      </div>
+    );
   }
 }
 

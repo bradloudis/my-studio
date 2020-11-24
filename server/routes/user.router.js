@@ -17,6 +17,24 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+// Handles GET student list for TEACHER
+router.get('/get-students/:id', rejectUnauthenticated, (req, res) => {
+  const teacherId = req.user.id;
+  const queryText = `SELECT * FROM "user"
+  JOIN "teacher_student" ON "user".id = "teacher_student".student_id
+  WHERE "teacher_student".teacher_id = $1;`;
+
+  pool
+    .query(queryText, [teacherId])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('Problem getting student list.', err);
+      res.sendStatus(500);
+    });
+});
+
 // Handles POST request with new user data for TEACHER
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
@@ -48,7 +66,7 @@ router.post('/register/teacher', (req, res, next) => {
     });
 });
 
-// Handles POST request with new user data for STUDENT
+// Handles POST request with new user data for STUDENT (added by TEACHER)
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/student', (req, res, next) => {
@@ -104,6 +122,7 @@ router.post('/register/student', (req, res, next) => {
     });
 });
 
+// Handles PUT request with updated user data for STUDENT (when they finish registration)
 router.put('/register/student/:id', (req, res) => {
   const queryText = `UPDATE "user" 
   SET "username"= $1, "password"=$2, "phone_number"=$3, "instrument"=$4 
