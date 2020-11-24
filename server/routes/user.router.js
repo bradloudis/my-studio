@@ -46,9 +46,10 @@ router.post('/register/teacher', (req, res, next) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const accessLevel = 1;
+  const registrationStatus = 'done';
 
-  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, access_level_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
+  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, access_level_id, registration_status)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;`;
   pool
     .query(queryText, [
       username,
@@ -58,6 +59,7 @@ router.post('/register/teacher', (req, res, next) => {
       email,
       phone,
       accessLevel,
+      registrationStatus,
     ])
     .then(() => res.sendStatus(201))
     .catch((err) => {
@@ -79,9 +81,10 @@ router.post('/register/student', (req, res, next) => {
   const instrument = 'TBD';
   const accessLevel = 2;
   const temporary_key = randomNumber();
+  const registrationStatus = 'pending';
 
-  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id, temporary_key)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
+  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id, temporary_key, registration_status)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id;`;
   pool
     .query(queryText, [
       username,
@@ -93,6 +96,7 @@ router.post('/register/student', (req, res, next) => {
       instrument,
       accessLevel,
       temporary_key,
+      registrationStatus,
     ])
     .then((result) => {
       // result.rows[0].id is the returned ID from the first query
