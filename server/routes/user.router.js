@@ -22,7 +22,7 @@ router.get('/get-students', rejectUnauthenticated, (req, res) => {
   const teacherId = req.user.id;
   const queryText = `SELECT * FROM "user"
   JOIN "teacher_student" ON "user".id = "teacher_student".student_id
-  WHERE "teacher_student".teacher_id = $1;`;
+  WHERE "teacher_student".teacher_id = $1 AND "user".registration_status = 'done';`;
 
   pool
     .query(queryText, [teacherId])
