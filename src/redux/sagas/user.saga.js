@@ -24,23 +24,8 @@ function* fetchUser() {
   }
 }
 
-// gets list of students for a teacher
-function* studentSaga(action) {
-  try {
-    const teacherId = action.payload;
-    const studentList = yield axios.get(`/api/user/student-list/${teacherId}`);
-    yield put({
-      type: 'SET_STUDENTS',
-      payload: studentList,
-    });
-  } catch (error) {
-    console.log('Could not get student list!', error);
-  }
-}
-
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
-  yield takeLatest('GET_STUDENTS', studentSaga);
 }
 
 export default userSaga;

@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
@@ -11,18 +9,6 @@ const userReducer = (state = {}, action) => {
   }
 };
 
-const studentReducer = (state = [], action) => {
-  switch (action.type) {
-    case 'SET_STUDENTS':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
 // user will be on the redux state at:
 // state.user
-export default combineReducers({
-  userReducer,
-  studentReducer,
-});
+export default userReducer;
