@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
 import { Button } from '@material-ui/core';
@@ -9,6 +10,7 @@ import StudentList from '../StudentList/StudentList';
 class TeacherHomePage extends Component {
   addStudentClick = () => {
     console.log('add student clicked');
+    this.props.history.push('/add-student');
   };
 
   render() {
@@ -26,4 +28,4 @@ class TeacherHomePage extends Component {
   }
 }
 
-export default TeacherHomePage;
+export default withRouter(TeacherHomePage);
