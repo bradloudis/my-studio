@@ -8,7 +8,7 @@ import { Button } from '@material-ui/core';
 import './LandingPage.css';
 
 // CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+import RegisterForm from '../../components/RegisterForm/RegisterForm';
 
 class LandingPage extends Component {
   state = {
