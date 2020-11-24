@@ -8,6 +8,7 @@ function* registerUser(action) {
     yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
 
     // passes the username and password from the payload to the server
+    // TODO!! CHANGE ROUTE FOR TEACHER!!!
     yield axios.post('/api/user/register', action.payload);
 
     // automatically log a user in after registration
@@ -21,6 +22,8 @@ function* registerUser(action) {
     yield put({ type: 'REGISTRATION_FAILED' });
   }
 }
+
+// TODO!! ADD GEN FUNCTION FOR 'REGISTER_STUDENT'
 
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
