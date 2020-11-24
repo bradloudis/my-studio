@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
 import { Button, TextField } from '@material-ui/core';
@@ -20,18 +22,21 @@ class AddStudentForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state);
-    // if (this.state.username && this.state.password) {
-    //   this.props.dispatch({
-    //     type: 'LOGIN',
-    //     payload: {
-    //       username: this.state.username,
-    //       password: this.state.password,
-    //     },
-    //   });
-    // } else {
-    //   this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
-    // }
+    this.props.dispatch({
+      type: 'REGISTER_STUDENT',
+      payload: {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        username: this.state.username,
+        email: this.state.email,
+      },
+    });
+
+    this.props.history.push('/user');
+  };
+
+  handleBackClick = () => {
+    this.props.history.push('/user');
   };
 
   render() {
@@ -71,6 +76,9 @@ class AddStudentForm extends Component {
           />
         </div>
         <div>
+          <Button variant="contained" onClick={this.handleBackClick}>
+            BACK
+          </Button>
           <Button type="submit" variant="contained">
             SUBMIT
           </Button>
@@ -80,4 +88,4 @@ class AddStudentForm extends Component {
   }
 }
 
-export default AddStudentForm;
+export default withRouter(connect()(AddStudentForm));
