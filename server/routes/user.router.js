@@ -72,28 +72,23 @@ router.post('/register/teacher', (req, res, next) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/student', (req, res, next) => {
+  // username is stubbed in by teacher when they add new student!
   const username = req.body.username;
-  const password = 'TBD';
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const phone = 0;
-  const instrument = 'TBD';
   const accessLevel = 2;
   const temporary_key = randomNumber();
   const registrationStatus = 'pending';
 
-  const queryText = `INSERT INTO "user" (username, password, first_name, last_name, email, phone_number, instrument, access_level_id, temporary_key, registration_status)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id;`;
+  const queryText = `INSERT INTO "user" (username, first_name, last_name, email,  access_level_id, temporary_key, registration_status)
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
   pool
     .query(queryText, [
       username,
-      password,
       firstName,
       lastName,
       email,
-      phone,
-      instrument,
       accessLevel,
       temporary_key,
       registrationStatus,
