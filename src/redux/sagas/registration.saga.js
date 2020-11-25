@@ -2,6 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 // worker Saga: will be fired on "REGISTER" actions
+// handles "REGISTER" actions relating to teacher
 function* registerTeacher(action) {
   try {
     // clear any existing error on the registration page
@@ -23,7 +24,7 @@ function* registerTeacher(action) {
   }
 }
 
-// TODO!! ADD GEN FUNCTION FOR 'REGISTER_STUDENT'
+// // handles "REGISTER" actions relating to student
 function* registerStudent(action) {
   try {
     // clear any existing error on the registration page
