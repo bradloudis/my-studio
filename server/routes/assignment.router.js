@@ -46,22 +46,14 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     .then((result) => {
       // result.rows[0].id is the returned ID from the first query
       const newAssignmentId = result.rows[0].id;
-      const defaultCompleteStatus = 'false';
       const taskItemOne = req.body.taskItemOne;
       const taskItemTwo = req.body.taskItemTwo;
 
-      const queryText = `INSERT INTO "task" (assignment_id, task_item, complete_status)
-        VALUES ($1, $2, $3),
-        ($4, $5, $6)`;
+      const queryText = `INSERT INTO "task" (assignment_id, task_item)
+        VALUES ($1, $2),
+        ($1, $3)`;
 
-      const queryArray = [
-        newAssignmentId,
-        taskItemOne,
-        defaultCompleteStatus,
-        newAssignmentId,
-        taskItemTwo,
-        defaultCompleteStatus,
-      ];
+      const queryArray = [newAssignmentId, taskItemOne, taskItemTwo];
 
       pool
         .query(queryText, queryArray)
