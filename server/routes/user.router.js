@@ -20,7 +20,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles GET student list for TEACHER
 router.get('/get-students', rejectUnauthenticated, (req, res) => {
   const teacherId = req.user.id;
-  const queryText = `SELECT * FROM "user"
+  const queryText = `SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user"
   JOIN "teacher_student" ON "user".id = "teacher_student".student_id
   WHERE "teacher_student".teacher_id = $1 AND "user".registration_status = 'done';`;
 
