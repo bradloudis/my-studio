@@ -1,19 +1,38 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * GET route retrieves assignment, teacher_notes, and all associated tasks
  */
-router.get('/', (req, res) => {
-  // GET route code here
+router.get('/', rejectUnauthenticated, (req, res) => {
+  const teacherId = req.user.id;
+  // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
+  const queryText = `SELECT "teacher_notes", "task_item", "username", "student_id" FROM "assignment"
+  JOIN "task" ON "assignment".id = "task".assignment_id
+  JOIN "user" ON "assignment".student_id = "user".id
+  WHERE "assignment".teacher_id = $1
+  ORDER BY "assignment".id DESC LIMIT 2;`;
+
+  pool
+    .query(queryText, [teacherId])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('Problem getting assignment!', err);
+      res.sendStatus(500);
+    });
 });
 
 /**
  * POST route handles teacher creating assignment
  * teacher_notes and student_notes should come over with default state of '' incase nothing is input by teacher/student
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   const teacherId = req.user.id;
   const studentId = req.body.studentId;
   const teacherNotes = req.body.teacherNotes;
