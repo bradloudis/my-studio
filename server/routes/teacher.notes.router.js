@@ -37,4 +37,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// PUT route updates the already created note
+router.put('/:id', rejectUnauthenticated, (req, res) => {});
+
 module.exports = router;
