@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// CUSTOM COMPONENTS
+import StudentListItem from '../StudentListItem/StudentListItem';
+
 class StudentList extends Component {
   componentDidMount() {
     this.props.dispatch({
@@ -10,7 +13,13 @@ class StudentList extends Component {
   }
 
   render() {
-    return <div>{JSON.stringify(this.props.store.studentReducer)}</div>;
+    return (
+      <div>
+        {this.props.store.studentReducer.map((item, index) => {
+          return <StudentListItem key={index} student={item} />;
+        })}
+      </div>
+    );
   }
 }
 
