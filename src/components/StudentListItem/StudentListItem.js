@@ -5,10 +5,14 @@ import './StudentListItem.css';
 import { Card, CardActionArea } from '@material-ui/core';
 
 class StudentListItem extends Component {
+  handleStudentClick = () => {
+    console.log('student click!', this.props.student.student_id);
+  };
+
   render() {
     return (
       <Card>
-        <CardActionArea>
+        <CardActionArea onClick={this.handleStudentClick}>
           {this.props.student.profile_picture ? (
             <p>PROFILE PICTURE</p>
           ) : (

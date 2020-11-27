@@ -22,6 +22,7 @@ import LandingPage from '../../pages/LandingPage/LandingPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import AddStudentPage from '../../pages/AddStudentPage/AddStudentPage';
+import StudentDetailsPage from '../../pages/StudentDetailsPage/StudentDetailsPage';
 
 import './App.css';
 
@@ -63,6 +64,13 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+
+            <ProtectedRoute
+              // logged in shows student details page else shows LoginPage
+              exact
+              path="/student-details/:id"
+              component={StudentDetailsPage}
             />
 
             <ProtectedRoute
