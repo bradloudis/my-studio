@@ -18,7 +18,7 @@ class StudentList extends Component {
   render() {
     return (
       <Grid container spacing={2}>
-        {this.props.store.studentReducer.map((item, index) => {
+        {this.props.store.student.studentListReducer.map((item, index) => {
           return (
             <Grid item key={index}>
               <StudentListItem student={item} />

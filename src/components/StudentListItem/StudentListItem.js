@@ -7,7 +7,7 @@ import { Card, CardActionArea } from '@material-ui/core';
 
 class StudentListItem extends Component {
   handleStudentClick = () => {
-    console.log('student click!', this.props.student.student_id);
+    // console.log('student click!', this.props.student.student_id);
     this.props.history.push(
       `/student-details/${this.props.student.student_id}`
     );

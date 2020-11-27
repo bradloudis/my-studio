@@ -19,7 +19,10 @@ function* studentDetails(action) {
     const studentDetails = yield axios.get(
       `/api/user/student-details/${action.payload}`
     );
-    console.log(studentDetails.data);
+    yield put({
+      type: 'SET_STUDENT_DETAILS',
+      payload: studentDetails.data,
+    });
   } catch (error) {
     console.log('Could not get student details!', error);
   }
