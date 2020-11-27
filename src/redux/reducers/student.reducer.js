@@ -9,7 +9,7 @@ const studentListReducer = (state = [], action) => {
   }
 };
 
-const studentDetailsReducer = (state = [], action) => {
+const studentDetailsReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_STUDENT_DETAILS':
       return action.payload;
