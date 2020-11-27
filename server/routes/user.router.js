@@ -35,6 +35,22 @@ router.get('/get-students', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// Handles GET student details for Student Details Page
+router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
+  const queryText =
+    'SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user" WHERE id=$1';
+
+  pool
+    .query(queryText, [req.params.id])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('Problem getting student details.', err);
+      res.sendStatus(500);
+    });
+});
+
 // Handles POST request with new user data for TEACHER
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted

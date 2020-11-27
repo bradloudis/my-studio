@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './StudentListItem.css';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL-UI
 import { Card, CardActionArea } from '@material-ui/core';
@@ -7,6 +8,9 @@ import { Card, CardActionArea } from '@material-ui/core';
 class StudentListItem extends Component {
   handleStudentClick = () => {
     console.log('student click!', this.props.student.student_id);
+    this.props.history.push(
+      `/student-details/${this.props.student.student_id}`
+    );
   };
 
   render() {
@@ -29,4 +33,4 @@ class StudentListItem extends Component {
   }
 }
 
-export default StudentListItem;
+export default withRouter(StudentListItem);
