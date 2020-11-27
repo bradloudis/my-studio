@@ -8,10 +8,20 @@ const {
 /*----- SHOULD PROBABLY USE GET on /user/get-students for the specific teacher's list of students -----*/
 
 /**
- * GET route template
+ * GET route handles getting the saved note about a student
  */
-router.get('/', (req, res) => {
-  // GET route code here
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+  const queryText = 'SELECT "note" FROM "teacher_notes" WHERE student_id=$1';
+
+  pool
+    .query(queryText, [req.params.id])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows[0]);
+    })
+    .catch((err) => {
+      console.log('Problem getting notes for this student.', err);
+      res.sendStatus(500);
+    });
 });
 
 /**
