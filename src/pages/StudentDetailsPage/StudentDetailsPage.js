@@ -13,6 +13,11 @@ class StudentDetailsPage extends Component {
       type: 'GET_STUDENT_DETAILS',
       payload: this.props.match.params.id,
     });
+
+    this.props.dispatch({
+      type: 'GET_NOTE',
+      payload: this.props.match.params.id,
+    });
   }
 
   render() {
@@ -49,7 +54,7 @@ class StudentDetailsPage extends Component {
               </Grid>
               <Grid item xs={6}>
                 <h2>Notes</h2>
-                <p>Lorem Ipsum</p>
+                <p>{this.props.store.teacherNote.note}</p>
               </Grid>
             </Grid>
           </Grid>
