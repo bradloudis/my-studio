@@ -5,6 +5,9 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 // MATERIAL-UI
 import { Container, Grid } from '@material-ui/core';
 
+// CUSTOM COMPONENTS
+import TeacherNote from '../../components/TeacherNote/TeacherNote';
+
 class StudentDetailsPage extends Component {
   componentDidMount() {
     // this is the id to send in dispatch to get the details for the individual student!
@@ -53,8 +56,7 @@ class StudentDetailsPage extends Component {
                 <p>Lorem Ipsum</p>
               </Grid>
               <Grid item xs={6}>
-                <h2>Notes</h2>
-                <p>{this.props.store.teacherNote.note}</p>
+                <TeacherNote />
               </Grid>
             </Grid>
           </Grid>
