@@ -21,7 +21,7 @@ function* studentDetails(action) {
     );
     yield put({
       type: 'SET_STUDENT_DETAILS',
-      payload: studentDetails.data[0],
+      payload: studentDetails.data,
     });
   } catch (error) {
     console.log('Could not get student details!', error);

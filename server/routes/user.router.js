@@ -43,7 +43,7 @@ router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [req.params.id])
     .then((dbResponse) => {
-      res.send(dbResponse.rows);
+      res.send(dbResponse.rows[0]);
     })
     .catch((err) => {
       console.log('Problem getting student details.', err);
