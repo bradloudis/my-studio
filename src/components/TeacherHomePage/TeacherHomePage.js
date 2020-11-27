@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
-import { Button } from '@material-ui/core';
+import { Button, Container, Box } from '@material-ui/core';
 
 // CUSTOM COMPONENTS
 import StudentList from '../StudentList/StudentList';
@@ -15,15 +15,17 @@ class TeacherHomePage extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>TEACHER</h1>
         <h2>My Students</h2>
 
         <Button variant="contained" onClick={this.addStudentClick}>
           ADD STUDENT
         </Button>
-        <StudentList />
-      </div>
+        <Box m={2}>
+          <StudentList />
+        </Box>
+      </Container>
     );
   }
 }
