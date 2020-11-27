@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // gets list of students for a teacher
-function* student() {
+function* studentList() {
   try {
     const studentList = yield axios.get('/api/user/get-students');
     yield put({
@@ -14,8 +14,20 @@ function* student() {
   }
 }
 
+function* studentDetails(action) {
+  try {
+    const studentDetails = yield axios.get(
+      `/api/user/student-details/${action.payload}`
+    );
+    console.log(studentDetails.data);
+  } catch (error) {
+    console.log('Could not get student details!', error);
+  }
+}
+
 function* studentSaga() {
-  yield takeLatest('GET_STUDENTS', student);
+  yield takeLatest('GET_STUDENTS', studentList);
+  yield takeLatest('GET_STUDENT_DETAILS', studentDetails);
 }
 
 export default studentSaga;

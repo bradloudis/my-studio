@@ -6,6 +6,10 @@ class StudentDetailsPage extends Component {
   componentDidMount() {
     // this is the id to send in dispatch to get the details for the individual student!
     console.log(this.props.match.params.id);
+    this.props.dispatch({
+      type: 'GET_STUDENT_DETAILS',
+      payload: this.props.match.params.id,
+    });
   }
 
   render() {
