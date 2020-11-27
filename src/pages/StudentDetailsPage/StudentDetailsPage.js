@@ -31,8 +31,14 @@ class StudentDetailsPage extends Component {
                 className="blankProfileImg"
               />
             )}
-            <h3>{studentToDisplay.first_name}</h3>
-            <p>{studentToDisplay.instrument}</p>
+            <p>
+              <strong>Student Name: </strong>
+              {studentToDisplay.first_name}
+            </p>
+            <p>
+              <strong>Instrument: </strong>
+              {studentToDisplay.instrument}
+            </p>
           </Grid>
           <Grid item xs={8}>
             <h2>Next Lesson:</h2>
