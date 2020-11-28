@@ -28,6 +28,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
  * POST route handles teacher adding a note about a student
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
+  console.log(req.body);
   const teacherId = req.user.id;
   const studentId = req.body.studentId;
   const note = req.body.note;
