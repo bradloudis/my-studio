@@ -49,6 +49,19 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 });
 
 // PUT route updates the already created note
-router.put('/:id', rejectUnauthenticated, (req, res) => {});
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+  const queryText = `UPDATE "teacher_notes" SET "note"=$1 WHERE "student_id"=$2;`;
+  const queryArray = [req.body.note, req.params.id];
+
+  pool
+    .query(queryText, queryArray)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('Problem updating teacher note', err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;
