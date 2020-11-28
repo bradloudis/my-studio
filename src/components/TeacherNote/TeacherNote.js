@@ -17,26 +17,33 @@ class TeacherNote extends Component {
     });
   };
 
-  handleBtnClick = () => {
-    if (!this.state.displayEditField) {
-      this.setState({
-        displayEditField: true,
-      });
-    } else {
-      // send a dispatch of the new note
-      // this.props.dispatch({
-      //   type: 'SAVE_NOTE',
-      //   payload: {
-      //     studentId: this.props.match.params.id,
-      //     note: this.state.note,
-      //   },
-      // });
-      console.log(this.props.studentId);
-      // toggle state
-      this.setState({
-        displayEditField: false,
-      });
-    }
+  handleAddClick = () => {
+    // toggle state to true. edit form will render on page
+    this.setState({
+      displayEditField: true,
+    });
+  };
+
+  handleEditClick = () => {
+    // toggle state to true. edit form will render on page
+    this.setState({
+      displayEditField: true,
+    });
+  };
+
+  handleSaveClick = () => {
+    // send a dispatch of the new note
+    this.props.dispatch({
+      type: 'SAVE_NOTE',
+      payload: {
+        studentId: this.props.studentId,
+        note: this.state.note,
+      },
+    });
+    // toggle state to false. teacher's note will render on page
+    this.setState({
+      displayEditField: false,
+    });
   };
 
   render() {
@@ -51,17 +58,23 @@ class TeacherNote extends Component {
               value={this.state.note}
               onChange={this.handleInputChangeFor('note')}
             />
-            <Button variant="contained" onClick={this.handleBtnClick}>
-              SAVE
-            </Button>
+            {this.props.store.teacherNote.note ? (
+              <Button variant="contained">UPDATE</Button>
+            ) : (
+              <Button variant="contained" onClick={this.handleSaveClick}>
+                SAVE
+              </Button>
+            )}
           </div>
         ) : (
           <div>
             <p>{this.props.store.teacherNote.note}</p>
             {this.props.store.teacherNote.note ? (
-              <Button variant="contained">EDIT</Button>
+              <Button variant="contained" onClick={this.handleEditClick}>
+                EDIT
+              </Button>
             ) : (
-              <Button variant="contained" onClick={this.handleBtnClick}>
+              <Button variant="contained" onClick={this.handleAddClick}>
                 ADD
               </Button>
             )}
