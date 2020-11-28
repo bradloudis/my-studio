@@ -17,7 +17,7 @@ function* getNote(action) {
 function* saveNote(action) {
   try {
     yield console.log(action.payload);
-    yield axios.post('/api/teacher-notes', action.payload.studentId);
+    yield axios.post('/api/teacher-notes', action.payload);
     yield put({
       type: 'GET_NOTE',
       payload: action.payload.studentId,

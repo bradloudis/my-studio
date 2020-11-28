@@ -31,6 +31,13 @@ class TeacherNote extends Component {
     });
   };
 
+  handleCancelClick = () => {
+    // toggle state to false. teacher note will render on page
+    this.setState({
+      displayEditField: false,
+    });
+  };
+
   handleSaveClick = () => {
     // send a dispatch of the new note
     this.props.dispatch({
@@ -54,17 +61,24 @@ class TeacherNote extends Component {
         {this.state.displayEditField ? (
           <div>
             <TextField
-              label="note"
+              label={this.props.store.teacherNote.note}
+              multiline
+              rows={4}
               value={this.state.note}
               onChange={this.handleInputChangeFor('note')}
             />
-            {this.props.store.teacherNote.note ? (
-              <Button variant="contained">UPDATE</Button>
-            ) : (
-              <Button variant="contained" onClick={this.handleSaveClick}>
-                SAVE
+            <div>
+              <Button variant="contained" onClick={this.handleCancelClick}>
+                CANCEL
               </Button>
-            )}
+              {this.props.store.teacherNote.note ? (
+                <Button variant="contained">UPDATE</Button>
+              ) : (
+                <Button variant="contained" onClick={this.handleSaveClick}>
+                  SAVE
+                </Button>
+              )}
+            </div>
           </div>
         ) : (
           <div>
