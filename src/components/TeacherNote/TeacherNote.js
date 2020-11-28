@@ -13,10 +13,10 @@ class TeacherNote extends Component {
   handleBtnClick = () => {
     console.log('ADD/EDIT click!');
 
-    if (this.displayEditField) {
+    if (!this.state.displayEditField) {
       this.setState(
         {
-          displayEditField: false,
+          displayEditField: true,
         },
         () => {
           console.log(this.state);
@@ -25,7 +25,7 @@ class TeacherNote extends Component {
     } else {
       this.setState(
         {
-          displayEditField: true,
+          displayEditField: false,
         },
         () => {
           console.log(this.state);
