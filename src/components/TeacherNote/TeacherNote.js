@@ -53,6 +53,21 @@ class TeacherNote extends Component {
     });
   };
 
+  handleUpdateClick = () => {
+    // send a dispatch of the new note
+    this.props.dispatch({
+      type: 'UPDATE_NOTE',
+      payload: {
+        studentId: this.props.studentId,
+        note: this.state.note,
+      },
+    });
+    // toggle state to false. teacher's note will render on page
+    this.setState({
+      displayEditField: false,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -72,7 +87,9 @@ class TeacherNote extends Component {
                 CANCEL
               </Button>
               {this.props.store.teacherNote.note ? (
-                <Button variant="contained">UPDATE</Button>
+                <Button variant="contained" onClick={this.handleUpdateClick}>
+                  UPDATE
+                </Button>
               ) : (
                 <Button variant="contained" onClick={this.handleSaveClick}>
                   SAVE

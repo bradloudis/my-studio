@@ -49,9 +49,9 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 });
 
 // PUT route updates the already created note
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
   const queryText = `UPDATE "teacher_notes" SET "note"=$1 WHERE "student_id"=$2;`;
-  const queryArray = [req.body.note, req.params.id];
+  const queryArray = [req.body.note, req.body.studentId];
 
   pool
     .query(queryText, queryArray)
