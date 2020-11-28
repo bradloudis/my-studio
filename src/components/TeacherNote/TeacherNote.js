@@ -11,26 +11,14 @@ class TeacherNote extends Component {
   };
 
   handleBtnClick = () => {
-    console.log('ADD/EDIT click!');
-
     if (!this.state.displayEditField) {
-      this.setState(
-        {
-          displayEditField: true,
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
+      this.setState({
+        displayEditField: true,
+      });
     } else {
-      this.setState(
-        {
-          displayEditField: false,
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
+      this.setState({
+        displayEditField: false,
+      });
     }
   };
 
