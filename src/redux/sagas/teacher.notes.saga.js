@@ -14,8 +14,21 @@ function* getNote(action) {
   }
 }
 
+function* saveNote(action) {
+  try {
+    yield axios.post('/api/teacher-notes', action.payload.studentId);
+    yield put({
+      type: 'GET_NOTE',
+      payload: action.payload.studentId,
+    });
+  } catch (error) {
+    console.log('Could not save the note!', error);
+  }
+}
+
 function* noteSaga() {
   yield takeLatest('GET_NOTE', getNote);
+  yield takeLatest('SAVE_NOTE', saveNote);
 }
 
 export default noteSaga;

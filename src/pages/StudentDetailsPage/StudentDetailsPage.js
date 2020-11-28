@@ -56,7 +56,7 @@ class StudentDetailsPage extends Component {
                 <p>Lorem Ipsum</p>
               </Grid>
               <Grid item xs={6}>
-                <TeacherNote />
+                <TeacherNote studentId={this.props.match.params.id} />
               </Grid>
             </Grid>
           </Grid>
