@@ -6,8 +6,10 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
+const nodemailer = require('nodemailer');
+
 // random key generator for temporary key when new student is added by teacher
-const randomNumber = require('../modules/randomKeyGenerator');
+const { generateUUID } = require('../services/uuid.service');
 
 const router = express.Router();
 
@@ -55,12 +57,10 @@ router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/teacher', (req, res, next) => {
-  const username = req.body.username;
+  const { username, firstName, lastName, email, phone } = req.body;
   const password = encryptLib.encryptPassword(req.body.password);
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const phone = req.body.phone;
+
+  // accessLevel is set at 1 for a teacher account
   const accessLevel = 1;
   const registrationStatus = 'done';
 
@@ -87,52 +87,102 @@ router.post('/register/teacher', (req, res, next) => {
 // Handles POST request with new user data for STUDENT (added by TEACHER)
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register/student', (req, res, next) => {
-  // username is stubbed in by teacher when they add new student!
-  const username = req.body.username;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const accessLevel = 2;
-  const temporary_key = randomNumber();
-  const registrationStatus = 'pending';
+router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
+  const queryForTeacherAccessLevel = `SELECT * FROM "user"
+  JOIN "access_level" ON "user".access_level_id = "access_level".id
+  WHERE "user".id = $1;`;
 
-  const queryText = `INSERT INTO "user" (username, first_name, last_name, email,  access_level_id, temporary_key, registration_status)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
   pool
-    .query(queryText, [
-      username,
-      firstName,
-      lastName,
-      email,
-      accessLevel,
-      temporary_key,
-      registrationStatus,
-    ])
-    .then((result) => {
-      // result.rows[0].id is the returned ID from the first query
-      const newStudentId = result.rows[0].id;
-      // req.user.id is the ID of the TEACHER
-      const teacherId = req.user.id;
+    .query(queryForTeacherAccessLevel, [req.user.id])
+    .then((dbResponse) => {
+      const teacherWithAccessLevel = dbResponse.rows[0];
 
-      const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
-        VALUES ($1, $2);`;
+      if (teacherWithAccessLevel.name === 'teacher') {
+        // create temporary registration key for the new student
+        const tempKey = generateUUID();
 
-      // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
-      pool
-        .query(queryText, [teacherId, newStudentId])
-        .then(() => {
-          res.sendStatus(201);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.sendStatus(500);
-        });
-      // console.log(req.user.id);
-      // res.sendStatus(200);
+        // create temporary new student
+        const { firstName, lastName, email } = req.body;
+
+        // accessLevel is set at 2 for a student account
+        const accessLevel = 2;
+        const registrationStatus = 'pending';
+
+        const queryCreateTempStudent = `INSERT INTO "user" (first_name, last_name, email,  access_level_id, temporary_key, registration_status)
+          VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+        const queryArray = [
+          firstName,
+          lastName,
+          email,
+          accessLevel,
+          tempKey,
+          registrationStatus,
+        ];
+
+        pool
+          .query(queryCreateTempStudent, queryArray)
+          .then((dbResponse) => {
+            // dbResponse.rows[0].id is the returned ID from the first query
+            const newStudentId = dbResponse.rows[0].id;
+            // req.user.id is the ID of the teacher
+            const teacherId = req.user.id;
+
+            const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
+            VALUES ($1, $2);`;
+
+            // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
+            pool
+              .query(queryText, [teacherId, newStudentId])
+              .then(() => {
+                // nodemailer config and usage below. referencing Myron's repo from his nodemailer lecture
+                const transportConfig = {
+                  service: 'gmail',
+                  auth: {
+                    user: process.env.MAILER_EMAIL,
+                    pass: process.env.MAILER_PASS,
+                  },
+                };
+                let transporter = nodemailer.createTransport(transportConfig);
+
+                // create link url for user
+                let registerLinkBase = process.env.HOST_ENV;
+                const registerLink = `${registerLinkBase}/#/register/${tempKey}`;
+
+                const mailOptions = {
+                  from: req.user.email, // sender address
+                  to: email, // list of receivers
+                  subject: 'Welcome to My Studio', // Subject line
+                  html: `<div>
+                    <h1>Welcome ${firstName}</h1>
+                    <p>Please finalize your registration to My Studio by following the link below.</p>
+                    <a href="${registerLink}" target="_blank">Continue Registration</a>
+                  </div>`, // plain text body
+                };
+                transporter.sendMail(mailOptions, (err, info) => {
+                  if (err != null) {
+                    res.sendStatus(500);
+                    return;
+                  }
+
+                  res.sendStatus(201);
+                });
+              })
+              .catch((err) => {
+                console.log('problem during second query. ', err);
+                res.sendStatus(500);
+              });
+          })
+          .catch((err) => {
+            console.log(
+              'problem inserting new student during first query. ',
+              err
+            );
+            res.sendStatus(500);
+          });
+      }
     })
     .catch((err) => {
-      console.log('User registration failed: ', err);
+      console.log('could not access teacher role', err);
       res.sendStatus(500);
     });
 });
