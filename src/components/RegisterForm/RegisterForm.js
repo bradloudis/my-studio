@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// MATERIAL UI
+import { TextField, Button } from '@material-ui/core';
+
 class RegisterForm extends Component {
   state = {
     username: '',
@@ -44,79 +47,58 @@ class RegisterForm extends Component {
           </h3>
         )}
         <div>
-          <label htmlFor="firstName">
-            First Name:
-            <input
-              type="text"
-              name="firstName"
-              value={this.state.firstName}
-              required
-              onChange={this.handleInputChangeFor('firstName')}
-            />
-          </label>
+          <TextField
+            label="first name"
+            value={this.state.firstName}
+            onChange={this.handleInputChangeFor('firstName')}
+            required
+          />
         </div>
         <div>
-          <label htmlFor="lastName">
-            Last Name:
-            <input
-              type="text"
-              name="lastName"
-              value={this.state.lastName}
-              required
-              onChange={this.handleInputChangeFor('lastName')}
-            />
-          </label>
+          <TextField
+            label="last name"
+            value={this.state.lastName}
+            onChange={this.handleInputChangeFor('lastName')}
+            required
+          />
         </div>
         <div>
-          <label htmlFor="phone">
-            Phone Number:
-            <input
-              type="number"
-              name="phone"
-              value={this.state.phone}
-              required
-              onChange={this.handleInputChangeFor('phone')}
-            />
-          </label>
+          <TextField
+            label="phone number"
+            value={this.state.phone}
+            onChange={this.handleInputChangeFor('phone')}
+            required
+          />
         </div>
         <div>
-          <label htmlFor="email">
-            Email:
-            <input
-              type="text"
-              name="email"
-              value={this.state.email}
-              required
-              onChange={this.handleInputChangeFor('email')}
-            />
-          </label>
+          <TextField
+            label="email"
+            value={this.state.email}
+            onChange={this.handleInputChangeFor('email')}
+            required
+          />
         </div>
         <div>
-          <label htmlFor="username">
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              required
-              onChange={this.handleInputChangeFor('username')}
-            />
-          </label>
+          <TextField
+            label="username"
+            value={this.state.username}
+            onChange={this.handleInputChangeFor('username')}
+            required
+          />
         </div>
         <div>
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              required
-              onChange={this.handleInputChangeFor('password')}
-            />
-          </label>
+          <TextField
+            label="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleInputChangeFor('password')}
+            required
+          />
         </div>
         <div>
-          <input className="btn" type="submit" name="submit" value="Register" />
+          <Button type="submit" variant="contained">
+            SUBMIT
+          </Button>
         </div>
       </form>
     );
