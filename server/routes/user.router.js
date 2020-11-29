@@ -96,7 +96,9 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
       const teacherWithAccessLevel = dbResponse.rows[0];
 
       if (teacherWithAccessLevel.name === 'teacher') {
-        console.log('look, a teacher');
+        const tempKey = generateUUID();
+        console.log('UUID: ', tempKey);
+
         res.sendStatus(201);
       }
     })
