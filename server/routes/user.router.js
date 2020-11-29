@@ -134,7 +134,38 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
             pool
               .query(queryText, [teacherId, newStudentId])
               .then(() => {
-                res.sendStatus(201);
+                // nodemailer config and usage below. referencing Myron's repo from his nodemailer lecture
+                const transportConfig = {
+                  service: 'gmail',
+                  auth: {
+                    user: process.env.MAILER_EMAIL,
+                    pass: process.env.MAILER_PASS,
+                  },
+                };
+                let transporter = nodemailer.createTransport(transportConfig);
+
+                // create link url for user
+                let registerLinkBase = process.env.HOST_ENV;
+                const registerLink = `${registerLinkBase}/#/register/${tempKey}`;
+
+                const mailOptions = {
+                  from: req.user.email, // sender address
+                  to: email, // list of receivers
+                  subject: 'Welcome to My Studio', // Subject line
+                  html: `<div>
+                    <h1>Welcome ${firstName}</h1>
+                    <p>Please finalize your registration to My Studio by following the link below.</p>
+                    <a href="${registerLink}" target="_blank">Continue Registration</a>
+                  </div>`, // plain text body
+                };
+                transporter.sendMail(mailOptions, (err, info) => {
+                  if (err != null) {
+                    res.sendStatus(500);
+                    return;
+                  }
+
+                  res.sendStatus(201);
+                });
               })
               .catch((err) => {
                 console.log('problem during second query. ', err);
