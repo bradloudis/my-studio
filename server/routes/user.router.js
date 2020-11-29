@@ -96,61 +96,62 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
       const teacherWithAccessLevel = dbResponse.rows[0];
 
       if (teacherWithAccessLevel.name === 'teacher') {
+        // create temporary registration key for the new student
         const tempKey = generateUUID();
-        console.log('UUID: ', tempKey);
 
-        res.sendStatus(201);
+        // create temporary new student
+        const { firstName, lastName, email } = req.body;
+
+        // accessLevel is set at 2 for a student account
+        const accessLevel = 2;
+        const registrationStatus = 'pending';
+
+        const queryCreateTempStudent = `INSERT INTO "user" (first_name, last_name, email,  access_level_id, temporary_key, registration_status)
+          VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+        const queryArray = [
+          firstName,
+          lastName,
+          email,
+          accessLevel,
+          tempKey,
+          registrationStatus,
+        ];
+
+        pool
+          .query(queryCreateTempStudent, queryArray)
+          .then((dbResponse) => {
+            // dbResponse.rows[0].id is the returned ID from the first query
+            const newStudentId = dbResponse.rows[0].id;
+            // req.user.id is the ID of the teacher
+            const teacherId = req.user.id;
+
+            const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
+            VALUES ($1, $2);`;
+
+            // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
+            pool
+              .query(queryText, [teacherId, newStudentId])
+              .then(() => {
+                res.sendStatus(201);
+              })
+              .catch((err) => {
+                console.log('problem during second query. ', err);
+                res.sendStatus(500);
+              });
+          })
+          .catch((err) => {
+            console.log(
+              'problem inserting new student during first query. ',
+              err
+            );
+            res.sendStatus(500);
+          });
       }
     })
     .catch((err) => {
       console.log('could not access teacher role', err);
       res.sendStatus(500);
     });
-
-  // const firstName = req.body.firstName;
-  // const lastName = req.body.lastName;
-  // const email = req.body.email;
-  // const accessLevel = 2;
-  // const temporary_key = generateUUID();
-  // const registrationStatus = 'pending';
-
-  // const queryText = `INSERT INTO "user" (first_name, last_name, email,  access_level_id, temporary_key, registration_status)
-  //   VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
-  // pool
-  //   .query(queryText, [
-  //     firstName,
-  //     lastName,
-  //     email,
-  //     accessLevel,
-  //     temporary_key,
-  //     registrationStatus,
-  //   ])
-  //   .then((result) => {
-  //     // result.rows[0].id is the returned ID from the first query
-  //     const newStudentId = result.rows[0].id;
-  //     // req.user.id is the ID of the TEACHER
-  //     const teacherId = req.user.id;
-
-  //     const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
-  //       VALUES ($1, $2);`;
-
-  // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
-  // pool
-  //   .query(queryText, [teacherId, newStudentId])
-  //   .then(() => {
-  //     res.sendStatus(201);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     res.sendStatus(500);
-  //   });
-  // console.log(req.user.id);
-  // res.sendStatus(200);
-  // })
-  // .catch((err) => {
-  //   console.log('User registration failed: ', err);
-  //   res.sendStatus(500);
-  // });
 });
 
 // Handles PUT request with updated user data for STUDENT (when they finish registration)
