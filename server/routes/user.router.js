@@ -7,7 +7,7 @@ const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
 // random key generator for temporary key when new student is added by teacher
-const randomNumber = require('../modules/randomKeyGenerator');
+const { generateUUID } = require('../services/uuid.service');
 
 const router = express.Router();
 
@@ -55,12 +55,10 @@ router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register/teacher', (req, res, next) => {
-  const username = req.body.username;
+  const { username, firstName, lastName, email, phone } = req.body;
   const password = encryptLib.encryptPassword(req.body.password);
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const phone = req.body.phone;
+
+  // accessLevel is set at 1 for a teacher account
   const accessLevel = 1;
   const registrationStatus = 'done';
 
