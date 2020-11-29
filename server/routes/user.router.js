@@ -85,54 +85,70 @@ router.post('/register/teacher', (req, res, next) => {
 // Handles POST request with new user data for STUDENT (added by TEACHER)
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register/student', (req, res, next) => {
-  // username is stubbed in by teacher when they add new student!
-  const username = req.body.username;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const accessLevel = 2;
-  const temporary_key = randomNumber();
-  const registrationStatus = 'pending';
+router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
+  const queryForTeacherAccessLevel = `SELECT * FROM "user"
+  JOIN "access_level" ON "user".access_level_id = "access_level".id
+  WHERE "user".id = $1;`;
 
-  const queryText = `INSERT INTO "user" (username, first_name, last_name, email,  access_level_id, temporary_key, registration_status)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
   pool
-    .query(queryText, [
-      username,
-      firstName,
-      lastName,
-      email,
-      accessLevel,
-      temporary_key,
-      registrationStatus,
-    ])
-    .then((result) => {
-      // result.rows[0].id is the returned ID from the first query
-      const newStudentId = result.rows[0].id;
-      // req.user.id is the ID of the TEACHER
-      const teacherId = req.user.id;
+    .query(queryForTeacherAccessLevel, [req.user.id])
+    .then((dbResponse) => {
+      const teacherWithAccessLevel = dbResponse.rows[0];
 
-      const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
-        VALUES ($1, $2);`;
-
-      // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
-      pool
-        .query(queryText, [teacherId, newStudentId])
-        .then(() => {
-          res.sendStatus(201);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.sendStatus(500);
-        });
-      // console.log(req.user.id);
-      // res.sendStatus(200);
+      if (teacherWithAccessLevel.name === 'teacher') {
+        console.log('look, a teacher');
+        res.sendStatus(201);
+      }
     })
     .catch((err) => {
-      console.log('User registration failed: ', err);
+      console.log('could not access teacher role', err);
       res.sendStatus(500);
     });
+
+  // const firstName = req.body.firstName;
+  // const lastName = req.body.lastName;
+  // const email = req.body.email;
+  // const accessLevel = 2;
+  // const temporary_key = generateUUID();
+  // const registrationStatus = 'pending';
+
+  // const queryText = `INSERT INTO "user" (first_name, last_name, email,  access_level_id, temporary_key, registration_status)
+  //   VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+  // pool
+  //   .query(queryText, [
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     accessLevel,
+  //     temporary_key,
+  //     registrationStatus,
+  //   ])
+  //   .then((result) => {
+  //     // result.rows[0].id is the returned ID from the first query
+  //     const newStudentId = result.rows[0].id;
+  //     // req.user.id is the ID of the TEACHER
+  //     const teacherId = req.user.id;
+
+  //     const queryText = `INSERT INTO "teacher_student" (teacher_id, student_id)
+  //       VALUES ($1, $2);`;
+
+  // SECOND QUERY INSERTS INTO "teacher_student" table to establish relationship between teacher and new student they are adding
+  // pool
+  //   .query(queryText, [teacherId, newStudentId])
+  //   .then(() => {
+  //     res.sendStatus(201);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     res.sendStatus(500);
+  //   });
+  // console.log(req.user.id);
+  // res.sendStatus(200);
+  // })
+  // .catch((err) => {
+  //   console.log('User registration failed: ', err);
+  //   res.sendStatus(500);
+  // });
 });
 
 // Handles PUT request with updated user data for STUDENT (when they finish registration)
