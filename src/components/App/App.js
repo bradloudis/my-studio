@@ -23,6 +23,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import AddStudentPage from '../../pages/AddStudentPage/AddStudentPage';
 import StudentDetailsPage from '../../pages/StudentDetailsPage/StudentDetailsPage';
+import AddAssignmentPage from '../../pages/AddAssignmentPage/AddAssignmentPage';
 
 import './App.css';
 
@@ -78,6 +79,13 @@ class App extends Component {
               exact
               path="/add-student"
               component={AddStudentPage}
+            />
+
+            <ProtectedRoute
+              // logged in shows AddStudentPage else shows LoginPage
+              exact
+              path="/add-assignment/:id"
+              component={AddAssignmentPage}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
