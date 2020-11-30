@@ -7,6 +7,7 @@ import { Container, Grid } from '@material-ui/core';
 
 // CUSTOM COMPONENTS
 import TeacherNote from '../../components/TeacherNote/TeacherNote';
+import CurrentAssignment from '../../components/CurrentAssignment/CurrentAssignment';
 
 class StudentDetailsPage extends Component {
   componentDidMount() {
@@ -19,6 +20,11 @@ class StudentDetailsPage extends Component {
 
     this.props.dispatch({
       type: 'GET_NOTE',
+      payload: this.props.match.params.id,
+    });
+
+    this.props.dispatch({
+      type: 'GET_ASSIGNMENT',
       payload: this.props.match.params.id,
     });
   }
@@ -52,8 +58,7 @@ class StudentDetailsPage extends Component {
             <h2>Next Lesson:</h2>
             <Grid container>
               <Grid item xs={6}>
-                <h2>Current Assignment</h2>
-                <p>Lorem Ipsum</p>
+                <CurrentAssignment />
               </Grid>
               <Grid item xs={6}>
                 <TeacherNote studentId={this.props.match.params.id} />
