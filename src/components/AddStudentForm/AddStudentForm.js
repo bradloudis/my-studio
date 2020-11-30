@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+// SWEET ALERT
+import Swal from 'sweetalert2';
 // MATERIAL UI
 import { Button, TextField } from '@material-ui/core';
 
@@ -27,12 +29,21 @@ class AddStudentForm extends Component {
       payload: {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        username: this.state.username,
         email: this.state.email,
       },
     });
 
-    this.props.history.push('/user');
+    Swal.fire({
+      title: 'Success!',
+      text: `${this.state.firstName} has been successfully added to your studio!`,
+      icon: 'success',
+      confirmButtonText: `Ok`,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.props.history.push('/user');
+      }
+    });
   };
 
   handleBackClick = () => {
@@ -56,14 +67,6 @@ class AddStudentForm extends Component {
             label="last name"
             value={this.state.lastName}
             onChange={this.handleInputChangeFor('lastName')}
-            required
-          />
-        </div>
-        <div>
-          <TextField
-            label="username"
-            value={this.state.username}
-            onChange={this.handleInputChangeFor('username')}
             required
           />
         </div>
