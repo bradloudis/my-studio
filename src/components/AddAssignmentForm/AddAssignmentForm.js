@@ -1,9 +1,65 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
+// MATERIAL UI
+import { Button, TextField } from '@material-ui/core';
 
 class AddAssignmentForm extends Component {
+  state = {
+    taskItemOne: '',
+    taskItemTwo: '',
+    teacherNotes: '',
+  };
+
+  handleInputChangeFor = (propertyName) => (event) => {
+    this.setState({
+      [propertyName]: event.target.value,
+    });
+  };
+
+  handleBackClick = () => {
+    this.props.history.push(`/student-details/${this.props.studentId}`);
+  };
+
   render() {
-    return <h1>Add Assignment</h1>;
+    return (
+      <form className="formPanel" onSubmit={this.handleSubmit}>
+        <h2>Add Assignment!</h2>
+        <div>
+          <TextField
+            label="task one"
+            value={this.state.taskItemOne}
+            onChange={this.handleInputChangeFor('taskItemOne')}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            label="task two"
+            value={this.state.taskItemTwo}
+            onChange={this.handleInputChangeFor('taskItemTwo')}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            label="notes"
+            value={this.state.teacherNotes}
+            onChange={this.handleInputChangeFor('teacherNotes')}
+            required
+          />
+        </div>
+        <div>
+          <Button variant="contained" onClick={this.handleBackClick}>
+            BACK
+          </Button>
+          <Button type="submit" variant="contained">
+            SUBMIT
+          </Button>
+        </div>
+      </form>
+    );
   }
 }
 
-export default AddAssignmentForm;
+export default withRouter(AddAssignmentForm);

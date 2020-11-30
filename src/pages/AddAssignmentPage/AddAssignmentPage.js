@@ -6,11 +6,14 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import AddAssignmentForm from '../../components/AddAssignmentForm/AddAssignmentForm';
 
 class AddAssignmentPage extends Component {
+  state = {
+    studentId: this.props.match.params.id,
+  };
   render() {
     return (
       <div>
         {this.props.store.user.access_level_id === 1 ? (
-          <AddAssignmentForm />
+          <AddAssignmentForm studentId={this.state.studentId} />
         ) : (
           <h1>Hey, you don't belong here!</h1>
         )}
