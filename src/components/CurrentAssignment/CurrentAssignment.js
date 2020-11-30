@@ -7,9 +7,22 @@ class CurrentAssignment extends Component {
     return (
       <div>
         <h2>Current Assignment</h2>
-        {JSON.stringify(this.props.store.assignment)}
-        {JSON.stringify(this.props.store.assignment[0])}
-        <ul>{/* <li>{this.props.store.assignment[0].task_item}</li> */}</ul>
+        <h4>Tasks:</h4>
+        <ul>
+          <li>
+            {this.props.store.assignment[0] != null &&
+              this.props.store.assignment[0].task_item}
+          </li>
+          <li>
+            {this.props.store.assignment[1] != null &&
+              this.props.store.assignment[1].task_item}
+          </li>
+        </ul>
+        <h4>Notes:</h4>
+        <p>
+          {this.props.store.assignment[0] != null &&
+            this.props.store.assignment[1].teacher_notes}
+        </p>
       </div>
     );
   }
