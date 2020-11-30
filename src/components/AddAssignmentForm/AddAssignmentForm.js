@@ -34,6 +34,9 @@ class AddAssignmentForm extends Component {
         studentId: this.props.studentId,
       },
     });
+
+    // navigate Teacher back to the details page for this particular student
+    this.props.history.push(`/student-details/${this.props.studentId}`);
   };
 
   render() {
