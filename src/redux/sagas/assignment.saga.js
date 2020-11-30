@@ -13,8 +13,17 @@ function* getAssignment(action) {
   }
 }
 
+function* saveAssignment(action) {
+  try {
+    yield axios.post('/api/assignment', action.payload);
+  } catch (error) {
+    console.log('Could not save new assignment!', error);
+  }
+}
+
 function* assignmentSaga() {
   yield takeLatest('GET_ASSIGNMENT', getAssignment);
+  yield takeLatest('SAVE_ASSIGNMENT', saveAssignment);
 }
 
 export default assignmentSaga;

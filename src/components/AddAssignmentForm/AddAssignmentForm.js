@@ -77,4 +77,4 @@ class AddAssignmentForm extends Component {
   }
 }
 
-export default withRouter(connect(AddAssignmentForm));
+export default withRouter(connect()(AddAssignmentForm));
