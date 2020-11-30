@@ -64,6 +64,8 @@ class AddAssignmentForm extends Component {
             label="notes"
             value={this.state.teacherNotes}
             onChange={this.handleInputChangeFor('teacherNotes')}
+            multiline
+            rows={4}
             required
           />
         </div>
