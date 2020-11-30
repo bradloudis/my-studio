@@ -41,7 +41,7 @@ class AddStudentForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="formPanel" onSubmit={this.handleSubmit}>
         <h2>Add a Student!</h2>
         <div>
           <TextField
