@@ -10,6 +10,7 @@ class FinishRegistrationForm extends Component {
       email: '',
       phone: '',
       instrument: '',
+      params: this.props.match.params.id,
     };
 
     registerUser = (event) => {
@@ -25,6 +26,7 @@ class FinishRegistrationForm extends Component {
           email: this.state.email,
           phone: this.state.phone,
           instrument: this.state.instrument,
+          params: this.state.params,
         },
       });
     };
