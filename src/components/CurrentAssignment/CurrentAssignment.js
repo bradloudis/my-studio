@@ -7,22 +7,18 @@ class CurrentAssignment extends Component {
     return (
       <div>
         <h2>Current Assignment</h2>
-        <h4>Tasks:</h4>
-        <ul>
-          <li>
-            {this.props.store.assignment[0] != null &&
-              this.props.store.assignment[0].task_item}
-          </li>
-          <li>
-            {this.props.store.assignment[1] != null &&
-              this.props.store.assignment[1].task_item}
-          </li>
-        </ul>
-        <h4>Notes:</h4>
-        <p>
-          {this.props.store.assignment[0] != null &&
-            this.props.store.assignment[1].teacher_notes}
-        </p>
+        {/* checking to see if there is an assignment before rendering to page */}
+        {this.props.store.assignment[0] != null && (
+          <div>
+            <h4>Tasks:</h4>
+            <ul>
+              <li>{this.props.store.assignment[0].task_item}</li>
+              <li>{this.props.store.assignment[1].task_item}</li>
+            </ul>
+            <h4>Notes:</h4>
+            <p>{this.props.store.assignment[1].teacher_notes}</p>
+          </div>
+        )}
       </div>
     );
   }
