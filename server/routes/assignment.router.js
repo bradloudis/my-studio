@@ -6,19 +6,19 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route retrieves assignment, teacher_notes, and all associated tasks
+ * GET route retrieves assignment, teacher_notes, and all associated tasks FOR TEACHER ACCOUNT
  */
-router.get('/', rejectUnauthenticated, (req, res) => {
-  const teacherId = req.user.id;
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+  const studentId = req.params.id;
   // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
-  const queryText = `SELECT "teacher_notes", "task_item", "username", "student_id" FROM "assignment"
+  const queryText = `SELECT "teacher_notes", "task_item" FROM "assignment"
   JOIN "task" ON "assignment".id = "task".assignment_id
   JOIN "user" ON "assignment".student_id = "user".id
-  WHERE "assignment".teacher_id = $1
+  WHERE "user".id = $1
   ORDER BY "assignment".id DESC LIMIT 2;`;
 
   pool
-    .query(queryText, [teacherId])
+    .query(queryText, [studentId])
     .then((dbResponse) => {
       res.send(dbResponse.rows);
     })
