@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
@@ -19,6 +20,20 @@ class AddAssignmentForm extends Component {
 
   handleBackClick = () => {
     this.props.history.push(`/student-details/${this.props.studentId}`);
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.props.dispatch({
+      type: 'SAVE_ASSIGNMENT',
+      payload: {
+        taskItemOne: this.state.taskItemOne,
+        taskItemTwo: this.state.taskItemTwo,
+        teacherNotes: this.state.teacherNotes,
+        studentId: this.props.studentId,
+      },
+    });
   };
 
   render() {
@@ -62,4 +77,4 @@ class AddAssignmentForm extends Component {
   }
 }
 
-export default withRouter(AddAssignmentForm);
+export default withRouter(connect(AddAssignmentForm));
