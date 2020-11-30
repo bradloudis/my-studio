@@ -7,8 +7,9 @@ class CurrentAssignment extends Component {
     return (
       <div>
         <h2>Current Assignment</h2>
-        <p>Lorem Ipsum</p>
         {JSON.stringify(this.props.store.assignment)}
+        {JSON.stringify(this.props.store.assignment[0])}
+        <ul>{/* <li>{this.props.store.assignment[0].task_item}</li> */}</ul>
       </div>
     );
   }
