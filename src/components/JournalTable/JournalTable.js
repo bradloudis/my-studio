@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// MATERIAL UI
+import {
+  Container,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@material-ui/core';
+
 class JournalTable extends Component {
   componentDidMount() {
     this.props.dispatch({
@@ -11,11 +22,22 @@ class JournalTable extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>Journal Page</h1>
         <p>hello, testing</p>
         {JSON.stringify(this.props.store.journal)}
-      </div>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Date</TableCell>
+                <TableCell align="center">Entry</TableCell>
+                <TableCell align="center">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+        </TableContainer>
+      </Container>
     );
   }
 }
