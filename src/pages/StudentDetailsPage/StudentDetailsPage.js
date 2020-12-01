@@ -35,11 +35,15 @@ class StudentDetailsPage extends Component {
     this.props.history.push(`/add-assignment/${this.props.match.params.id}`);
   };
 
+  backBtnClick = () => {
+    this.props.history.push('/user');
+  };
+
   render() {
     const studentToDisplay = this.props.store.student.studentDetailsReducer;
     return (
       <Container>
-        <h1>STUDENT DETAILS PAGE!</h1>
+        <h1>STUDENT DETAILS</h1>
         <Grid container>
           <Grid item xs={4}>
             {studentToDisplay.profile_picture ? (
@@ -59,6 +63,9 @@ class StudentDetailsPage extends Component {
               <strong>Instrument: </strong>
               {studentToDisplay.instrument}
             </p>
+            <Button variant="contained" onClick={this.backBtnClick}>
+              BACK
+            </Button>
           </Grid>
           <Grid item xs={8}>
             <h2>Next Lesson:</h2>
