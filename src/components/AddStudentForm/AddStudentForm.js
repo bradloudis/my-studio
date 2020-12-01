@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 // SWEET ALERT
 import Swal from 'sweetalert2';
 // MATERIAL UI
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Box } from '@material-ui/core';
 
 class AddStudentForm extends Component {
   state = {
@@ -78,14 +78,16 @@ class AddStudentForm extends Component {
             required
           />
         </div>
-        <div>
-          <Button variant="contained" onClick={this.handleBackClick}>
-            BACK
-          </Button>
+        <Box mt={2}>
+          <Box component="span" mr={1}>
+            <Button variant="contained" onClick={this.handleBackClick}>
+              BACK
+            </Button>
+          </Box>
           <Button type="submit" variant="contained">
             SUBMIT
           </Button>
-        </div>
+        </Box>
       </form>
     );
   }

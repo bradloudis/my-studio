@@ -29,26 +29,26 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // // GET FOR STUDENT PAGE
-// router.get('/student-page', rejectUnauthenticated, (req, res) => {
-//   const studentId = req.user.id;
-//   console.log(studentId);
-//   // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
-//   const queryText = `SELECT "teacher_notes", "task_item" FROM "assignment"
-//   JOIN "task" ON "assignment".id = "task".assignment_id
-//   JOIN "user" ON "assignment".student_id = "user".id
-//   WHERE "user".id = $1
-//   ORDER BY "assignment".id DESC LIMIT 2;`;
+router.get('/student-page', rejectUnauthenticated, (req, res) => {
+  const studentId = req.user.id;
+  console.log(studentId);
+  // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
+  const queryText = `SELECT "teacher_notes", "task_item" FROM "assignment"
+  JOIN "task" ON "assignment".id = "task".assignment_id
+  JOIN "user" ON "assignment".student_id = "user".id
+  WHERE "user".id = $1
+  ORDER BY "assignment".id DESC LIMIT 2;`;
 
-//   pool
-//     .query(queryText, [studentId])
-//     .then((dbResponse) => {
-//       res.send(dbResponse.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Problem getting assignment!', err);
-//       res.sendStatus(500);
-//     });
-// });
+  pool
+    .query(queryText, [studentId])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('Problem getting assignment!', err);
+      res.sendStatus(500);
+    });
+});
 
 /**
  * POST route handles teacher creating assignment

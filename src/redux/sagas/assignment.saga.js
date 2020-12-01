@@ -13,17 +13,17 @@ function* getAssignmentTeacher(action) {
   }
 }
 
-// function* getAssignmentStudent() {
-//   try {
-//     const assignment = yield axios.get('/api/assignment/student-page');
-//     yield put({
-//       type: 'SET_ASSIGNMENT',
-//       payload: assignment.data,
-//     });
-//   } catch (error) {
-//     console.log('Could not get the assignment!', error);
-//   }
-// }
+function* getAssignmentStudent() {
+  try {
+    const assignment = yield axios.get('/api/assignment/student-page');
+    yield put({
+      type: 'SET_ASSIGNMENT',
+      payload: assignment.data,
+    });
+  } catch (error) {
+    console.log('Could not get the assignment!', error);
+  }
+}
 
 function* saveAssignment(action) {
   try {
@@ -36,7 +36,7 @@ function* saveAssignment(action) {
 function* assignmentSaga() {
   yield takeLatest('GET_ASSIGNMENT_TEACHER', getAssignmentTeacher);
   yield takeLatest('SAVE_ASSIGNMENT', saveAssignment);
-  // yield takeLatest('GET_ASSIGNMENT_STUDENT', getAssignmentStudent);
+  yield takeLatest('GET_ASSIGNMENT_STUDENT', getAssignmentStudent);
 }
 
 export default assignmentSaga;
