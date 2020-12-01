@@ -18,6 +18,7 @@ router.get('/all', (req, res) => {
   pool
     .query(queryText, [req.user.id])
     .then((dbResponse) => {
+      console.log(dbResponse.rows);
       res.send(dbResponse.rows);
     })
     .catch((err) => {
