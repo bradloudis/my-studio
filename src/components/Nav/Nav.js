@@ -28,6 +28,13 @@ const Nav = (props) => {
           and call this link 'Login / Register' if they are not */}
           {loginLinkData.text}
         </Link>
+        {props.store.user.access_level_id === 2 && (
+          <>
+            <Link className="nav-link" to="/journal">
+              Journal
+            </Link>
+          </>
+        )}
         {/* Show the link to the info page and the logout button if the user is logged in */}
         {props.store.user.id && (
           <>
