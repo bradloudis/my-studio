@@ -8,6 +8,7 @@ import { Button, Grid, Container } from '@material-ui/core';
 class StudentHomePage extends Component {
   handleEditClick = () => {
     console.log('edit btn click');
+    console.log(new Date());
     // TODO AWS S3 upload profile picture
   };
 
@@ -38,6 +39,7 @@ class StudentHomePage extends Component {
         <Button variant="contained" onClick={this.handleEditClick}>
           EDIT
         </Button>
+        <h3>Assignment:</h3>
       </Container>
     );
   }
