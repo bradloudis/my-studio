@@ -12,7 +12,8 @@ const { query } = require('../modules/pool');
 router.get('/all', (req, res) => {
   const queryText = `SELECT * FROM "journal"
   JOIN "assignment" ON "journal".assignment_id="assignment".id
-  WHERE "journal".user_id=$1;`;
+  WHERE "journal".user_id=$1
+  ORDER BY "journal".id DESC;`;
 
   pool
     .query(queryText, [req.user.id])
