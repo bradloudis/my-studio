@@ -13,6 +13,9 @@ import {
   TableBody,
 } from '@material-ui/core';
 
+// CUSTOM COMPONENTS
+import JournalTableItem from '../JournalTableItem/JournalTableItem';
+
 class JournalTable extends Component {
   componentDidMount() {
     this.props.dispatch({
@@ -24,8 +27,6 @@ class JournalTable extends Component {
     return (
       <Container>
         <h1>Journal Page</h1>
-        <p>hello, testing</p>
-        {JSON.stringify(this.props.store.journal)}
         <TableContainer>
           <Table>
             <TableHead>
@@ -35,6 +36,11 @@ class JournalTable extends Component {
                 <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
+            <TableBody>
+              {this.props.store.journal.map((item, index) => {
+                return <JournalTableItem journalItem={item} key={index} />;
+              })}
+            </TableBody>
           </Table>
         </TableContainer>
       </Container>
