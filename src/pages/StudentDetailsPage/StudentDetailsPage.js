@@ -25,7 +25,7 @@ class StudentDetailsPage extends Component {
     });
 
     this.props.dispatch({
-      type: 'GET_ASSIGNMENT',
+      type: 'GET_ASSIGNMENT_TEACHER',
       payload: this.props.match.params.id,
     });
   }
