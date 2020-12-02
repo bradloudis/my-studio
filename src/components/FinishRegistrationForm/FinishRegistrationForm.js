@@ -44,7 +44,11 @@ class FinishRegistrationForm extends Component {
   render() {
     return (
       <form className="formPanel" onSubmit={this.registerUser}>
-        <h2>Student Registration</h2>
+        <h2>
+          Welcome {this.props.store.tempStudent.first_name}{' '}
+          {this.props.store.tempStudent.last_name}!
+        </h2>
+        <p>Please finish registering with My Studio</p>
         {this.props.store.errors.registrationMessage && (
           <h3 className="alert" role="alert">
             {this.props.store.errors.registrationMessage}
