@@ -213,7 +213,7 @@ router.get('/register/student/:tempId', (req, res) => {
 });
 
 // Handles PUT request with updated user data for STUDENT (when they finish registration)
-router.put('/register/student/:tempId', (req, res) => {
+router.put('/register/student/:tempKey', (req, res) => {
   const queryForTempStudent = `UPDATE "user" 
   SET "username"=$1, "password"=$2, "phone_number"=$3, "instrument"=$4, "registration_status"=$5, "temporary_key"=$6  
   WHERE "temporary_key"=$7;`;
@@ -229,7 +229,7 @@ router.put('/register/student/:tempId', (req, res) => {
     instrument,
     registrationStatus,
     null,
-    req.params.tempId,
+    req.params.tempKey,
   ];
 
   pool

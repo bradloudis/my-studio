@@ -14,7 +14,7 @@ class FinishRegistrationForm extends Component {
     email: '',
     phone: '',
     instrument: '',
-    params: this.props.tempKey,
+    tempKey: this.props.tempKey,
   };
 
   registerUser = (event) => {
@@ -22,16 +22,7 @@ class FinishRegistrationForm extends Component {
 
     this.props.dispatch({
       type: 'FINISH_STUDENT_REG',
-      payload: {
-        username: this.state.username,
-        password: this.state.password,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        phone: this.state.phone,
-        instrument: this.state.instrument,
-        params: this.state.params,
-      },
+      payload: this.state,
     });
   };
 
