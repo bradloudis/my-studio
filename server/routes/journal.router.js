@@ -4,52 +4,55 @@ const router = express.Router();
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const { query } = require('../modules/pool');
 
 /**
- * GET route template
+ * GET route handles getting ALL journals for a specific student
  */
-router.get('/', (req, res) => {
+router.get('/all', (req, res) => {
+  const queryText = `SELECT * FROM "journal"
+  JOIN "assignment" ON "journal".assignment_id="assignment".id
+  WHERE "journal".user_id=$1
+  ORDER BY "journal".id DESC;`;
+
+  pool
+    .query(queryText, [req.user.id])
+    .then((dbResponse) => {
+      console.log(dbResponse.rows);
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('could not get all journals', err);
+      res.sendStatus(500);
+    });
+});
+
+/**
+ * GET route handles getting one set of tasks for 'journal details' page
+ */
+router.get('/get-task', rejectUnauthenticated, (req, res) => {
   // GET route code here
 });
 
 /**
- * POST route template
+ * GET route handles getting note for 'journal details' page
  */
-router.post('/', rejectUnauthenticated, (req, res) => {
-  const taskItemOne = req.body.taskItemOne;
-  const taskItemTwo = req.body.taskItemTwo;
-  const completeStatusItemOne = req.body.completeStatusItemOne;
-  const completeStatusItemTwo = req.body.completeStatusItemTwo;
-  const notesItemOne = req.body.notesItemOne;
-  const notesItemTwo = req.body.notesItemTwo;
-  const date = req.body.date;
+router.get('/get-note', rejectUnauthenticated, (req, res) => {
+  // GET route code here
+});
 
-  const queryText = `WITH ins AS (
-    INSERT INTO "journal" ("task_item", "complete_status", "notes", "date")
-    VALUES ($1, $2, $3, $4),
-    ($5, $6, $7, $4) RETURNING id
-  )
-  SELECT array_agg(id) FROM ins;`;
-  const queryArray = [
-    taskItemOne,
-    completeStatusItemOne,
-    notesItemOne,
-    date,
-    taskItemTwo,
-    completeStatusItemTwo,
-    notesItemTwo,
-  ];
+/**
+ * POST route handles adding task and complete status to DB
+ */
+router.post('/post-tasks', rejectUnauthenticated, (req, res) => {
+  // POST route code here
+});
 
-  pool
-    .query(queryText, queryArray)
-    .then((dbResponse) => {
-      // console.log(dbResponse.rows[0].array_agg);
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      console.log('Problem storing Journal entry', err);
-      res.sendStatus(500);
-    });
+/**
+ * POST route handles adding student's notes to DB
+ */
+router.post('/post-note', rejectUnauthenticated, (req, res) => {
+  // POST route code here
 });
 
 module.exports = router;

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL-UI
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Button } from '@material-ui/core';
 
 // CUSTOM COMPONENTS
 import TeacherNote from '../../components/TeacherNote/TeacherNote';
+import CurrentAssignment from '../../components/CurrentAssignment/CurrentAssignment';
 
 class StudentDetailsPage extends Component {
   componentDidMount() {
@@ -21,13 +23,27 @@ class StudentDetailsPage extends Component {
       type: 'GET_NOTE',
       payload: this.props.match.params.id,
     });
+
+    this.props.dispatch({
+      type: 'GET_ASSIGNMENT_TEACHER',
+      payload: this.props.match.params.id,
+    });
   }
+
+  addNewAssignmentClick = () => {
+    console.log('btn click. student id: ', this.props.match.params.id);
+    this.props.history.push(`/add-assignment/${this.props.match.params.id}`);
+  };
+
+  backBtnClick = () => {
+    this.props.history.push('/user');
+  };
 
   render() {
     const studentToDisplay = this.props.store.student.studentDetailsReducer;
     return (
       <Container>
-        <h1>STUDENT DETAILS PAGE!</h1>
+        <h1>STUDENT DETAILS</h1>
         <Grid container>
           <Grid item xs={4}>
             {studentToDisplay.profile_picture ? (
@@ -47,13 +63,21 @@ class StudentDetailsPage extends Component {
               <strong>Instrument: </strong>
               {studentToDisplay.instrument}
             </p>
+            <Button variant="contained" onClick={this.backBtnClick}>
+              BACK
+            </Button>
           </Grid>
           <Grid item xs={8}>
             <h2>Next Lesson:</h2>
             <Grid container>
               <Grid item xs={6}>
-                <h2>Current Assignment</h2>
-                <p>Lorem Ipsum</p>
+                <CurrentAssignment />
+                <Button
+                  variant="contained"
+                  onClick={this.addNewAssignmentClick}
+                >
+                  ADD NEW ASSIGNMENT
+                </Button>
               </Grid>
               <Grid item xs={6}>
                 <TeacherNote studentId={this.props.match.params.id} />
@@ -66,4 +90,4 @@ class StudentDetailsPage extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(StudentDetailsPage);
+export default withRouter(connect(mapStoreToProps)(StudentDetailsPage));

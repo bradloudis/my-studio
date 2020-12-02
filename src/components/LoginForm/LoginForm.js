@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
 import { Button, TextField } from '@material-ui/core';
@@ -22,6 +23,8 @@ class LoginForm extends Component {
           password: this.state.password,
         },
       });
+      // send newly logged in user to their home page
+      this.props.history.push('/user');
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
@@ -69,4 +72,4 @@ class LoginForm extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(LoginForm);
+export default withRouter(connect(mapStoreToProps)(LoginForm));

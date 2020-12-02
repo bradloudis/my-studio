@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+// SWEET ALERT
+import Swal from 'sweetalert2';
 // MATERIAL UI
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Box } from '@material-ui/core';
 
 class AddStudentForm extends Component {
   state = {
@@ -27,12 +29,21 @@ class AddStudentForm extends Component {
       payload: {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        username: this.state.username,
         email: this.state.email,
       },
     });
 
-    this.props.history.push('/user');
+    Swal.fire({
+      title: 'Success!',
+      text: `${this.state.firstName} has been successfully added to your studio!`,
+      icon: 'success',
+      confirmButtonText: `Ok`,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.props.history.push('/user');
+      }
+    });
   };
 
   handleBackClick = () => {
@@ -41,7 +52,7 @@ class AddStudentForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="formPanel" onSubmit={this.handleSubmit}>
         <h2>Add a Student!</h2>
         <div>
           <TextField
@@ -61,28 +72,22 @@ class AddStudentForm extends Component {
         </div>
         <div>
           <TextField
-            label="username"
-            value={this.state.username}
-            onChange={this.handleInputChangeFor('username')}
-            required
-          />
-        </div>
-        <div>
-          <TextField
             label="email"
             value={this.state.email}
             onChange={this.handleInputChangeFor('email')}
             required
           />
         </div>
-        <div>
-          <Button variant="contained" onClick={this.handleBackClick}>
-            BACK
-          </Button>
+        <Box mt={2}>
+          <Box component="span" mr={1}>
+            <Button variant="contained" onClick={this.handleBackClick}>
+              BACK
+            </Button>
+          </Box>
           <Button type="submit" variant="contained">
             SUBMIT
           </Button>
-        </div>
+        </Box>
       </form>
     );
   }

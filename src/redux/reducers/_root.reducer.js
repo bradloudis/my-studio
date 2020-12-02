@@ -4,6 +4,8 @@ import user from './user.reducer';
 import student from './student.reducer';
 import teacherNote from './teacher.notes.reducer';
 import tempStudent from './tempStudent.reducer';
+import assignment from './assignment.reducer';
+import journal from './journal.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   student,
   teacherNote,
   tempStudent,
+  assignment,
+  journal,
 });
 
 export default rootReducer;
