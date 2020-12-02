@@ -1,42 +1,47 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import mapStoreToProps from '../../redux/mapStoreToProps';
+
+// MATERIAL UI
+import { TextField, Button } from '@material-ui/core';
 
 class FinishRegistrationForm extends Component {
+  state = {
+    username: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    instrument: '',
+    params: this.props.tempKey,
+  };
+
+  registerUser = (event) => {
+    event.preventDefault();
+
+    this.props.dispatch({
+      type: 'FINISH_STUDENT_REG',
+      payload: {
+        username: this.state.username,
+        password: this.state.password,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        phone: this.state.phone,
+        instrument: this.state.instrument,
+        params: this.state.params,
+      },
+    });
+  };
+
+  handleInputChangeFor = (propertyName) => (event) => {
+    this.setState({
+      [propertyName]: event.target.value,
+    });
+  };
+
   render() {
-    state = {
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      instrument: '',
-      params: this.props.match.params.id,
-    };
-
-    registerUser = (event) => {
-      event.preventDefault();
-
-      this.props.dispatch({
-        type: 'FINISH_STUDENT_REG',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          email: this.state.email,
-          phone: this.state.phone,
-          instrument: this.state.instrument,
-          params: this.state.params,
-        },
-      });
-    };
-
-    handleInputChangeFor = (propertyName) => (event) => {
-      this.setState({
-        [propertyName]: event.target.value,
-      });
-    };
-
     return (
       <form className="formPanel" onSubmit={this.registerUser}>
         <h2>Student Registration</h2>
@@ -112,4 +117,4 @@ class FinishRegistrationForm extends Component {
   }
 }
 
-export default FinishRegistrationForm;
+export default connect(mapStoreToProps)(FinishRegistrationForm);
