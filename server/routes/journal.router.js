@@ -28,10 +28,26 @@ router.get('/all', (req, res) => {
 });
 
 /**
- * GET route handles getting one set of tasks for 'journal details' page
+ * GET route handles getting the pair of tasks for 'journal details' page
  */
 router.get('/get-task', rejectUnauthenticated, (req, res) => {
-  // GET route code here
+  const queryText = `SELECT * FROM "journal"
+  JOIN "task" ON "task".id="journal".task_id
+  JOIN "assignment" ON "task".assignment_id="assignment".id
+  WHERE "journal".user_id=$1 AND "assignment".id=$2;`;
+
+  const studentId = req.user.id;
+  const assignmentId = req.body.assignmentId;
+
+  pool
+    .query(queryText, [studentId, assignmentId])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('problem getting pair of tasks', err);
+      res.sendStatus(500);
+    });
 });
 
 /**
