@@ -27,22 +27,26 @@ class JournalTable extends Component {
     return (
       <Container>
         <h1>Journal Page</h1>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Date</TableCell>
-                <TableCell align="center">Entry</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.props.store.journal.map((item, index) => {
-                return <JournalTableItem journalItem={item} key={index} />;
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        {this.props.store.journal.length != 0 ? (
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Date</TableCell>
+                  <TableCell align="center">Entry</TableCell>
+                  <TableCell align="center">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.store.journal.map((item, index) => {
+                  return <JournalTableItem journalItem={item} key={index} />;
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <h3>It looks like you don't have any journal entries yet!</h3>
+        )}
       </Container>
     );
   }
