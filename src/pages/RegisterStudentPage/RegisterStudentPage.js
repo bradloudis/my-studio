@@ -5,6 +5,9 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 // CUSTOM COMPONENTS
 import FinishRegistrationForm from '../../components/FinishRegistrationForm/FinishRegistrationForm';
 
+//  MATERIAL UI
+import { Container } from '@material-ui/core';
+
 class RegisterStudentPage extends Component {
   componentDidMount() {
     console.log(this.props.match.params.tempKey);
@@ -15,10 +18,14 @@ class RegisterStudentPage extends Component {
   }
   render() {
     return (
-      <div>
+      <Container>
         <h1>Finish Registration</h1>
-        <FinishRegistrationForm tempKey={this.props.match.params.tempKey} />
-      </div>
+        {this.props.store.errors.registrationMessage !== 'NOT AVAILABLE' ? (
+          <FinishRegistrationForm tempKey={this.props.match.params.tempKey} />
+        ) : (
+          <p>Please contact system Admin.</p>
+        )}
+      </Container>
     );
   }
 }
