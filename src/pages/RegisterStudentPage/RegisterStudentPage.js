@@ -10,6 +10,7 @@ class RegisterStudentPage extends Component {
     console.log(this.props.match.params.tempKey);
     this.props.dispatch({
       type: 'GET_TEMP_STUDENT',
+      payload: this.props.match.params.tempKey,
     });
   }
   render() {

@@ -37,6 +37,26 @@ function* registerStudent(action) {
   }
 }
 
+function* getTempStudent(action) {
+  try {
+    // clear any existing error on the registration page
+    yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
+
+    // get tempKey for the pre-registered student
+    const response = yield axios.get(
+      `/api/user/register/student/${action.payload}`
+    );
+    // dispatch to set temp student
+    yield put({
+      type: 'SET_TEMP_STUDENT',
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log('Error getting tempKey:', error);
+    yield put({ type: 'REGISTRATION_FAILED_TEMP_STUDENT_NOT_AVAILABLE' });
+  }
+}
+
 function* finishRegistrationStudent(action) {
   try {
     // clear any existing error on the registration page
@@ -56,6 +76,7 @@ function* finishRegistrationStudent(action) {
 function* registrationSaga() {
   yield takeLatest('REGISTER_TEACHER', registerTeacher);
   yield takeLatest('REGISTER_STUDENT', registerStudent);
+  yield takeLatest('GET_TEMP_STUDENT', getTempStudent);
   yield takeLatest('FINISH_STUDENT_REG', finishRegistrationStudent);
 }
 
