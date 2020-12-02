@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// CUSTOM COMPONENTS
+import CurrentAssignment from '../CurrentAssignment/CurrentAssignment';
+
 // MATERIAL UI
 import { Button, Grid, Container } from '@material-ui/core';
 
@@ -43,8 +46,7 @@ class StudentHomePage extends Component {
         <Button variant="contained" onClick={this.handleEditClick}>
           EDIT
         </Button>
-        <h3>Assignment:</h3>
-        {JSON.stringify(this.props.store.assignment)}
+        <CurrentAssignment />
       </Container>
     );
   }
