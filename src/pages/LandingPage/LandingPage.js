@@ -19,6 +19,10 @@ class LandingPage extends Component {
     this.props.history.push('/login');
   };
 
+  onRegister = () => {
+    this.props.history.push('/registration');
+  };
+
   render() {
     return (
       <div className="container">
@@ -59,7 +63,13 @@ class LandingPage extends Component {
             </p>
           </div>
           <div className="grid-col grid-col_4">
-            <RegisterForm />
+            {/* <RegisterForm /> */}
+            <center>
+              <h4>Need an account?</h4>
+              <Button variant="contained" onClick={this.onRegister}>
+                REGISTER
+              </Button>
+            </center>
 
             <center>
               <h4>Already a Member?</h4>
