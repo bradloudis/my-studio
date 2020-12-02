@@ -146,7 +146,7 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
 
                 // create link url for user
                 let registerLinkBase = process.env.HOST_ENV;
-                const registerLink = `${registerLinkBase}/#/register/${tempKey}`;
+                const registerLink = `${registerLinkBase}/#/register-student/${tempKey}`;
 
                 const mailOptions = {
                   from: req.user.email, // sender address
