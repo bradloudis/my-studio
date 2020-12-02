@@ -3,7 +3,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getAssignmentTeacher(action) {
   try {
-    const assignment = yield axios.get(`/api/assignment/${action.payload}`);
+    const assignment = yield axios.get(
+      `/api/assignment/student/${action.payload}`
+    );
     yield put({
       type: 'SET_ASSIGNMENT',
       payload: assignment.data,

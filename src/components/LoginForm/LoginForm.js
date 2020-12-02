@@ -23,8 +23,6 @@ class LoginForm extends Component {
           password: this.state.password,
         },
       });
-      // send newly logged in user to their home page
-      this.props.history.push('/user');
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }

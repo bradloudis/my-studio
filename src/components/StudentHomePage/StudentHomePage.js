@@ -7,7 +7,7 @@ import { Button, Grid, Container } from '@material-ui/core';
 
 class StudentHomePage extends Component {
   componentDidMount() {
-    // this.props.dispatch({ type: 'GET_ASSIGNMENT_STUDENT' });
+    this.props.dispatch({ type: 'GET_ASSIGNMENT_STUDENT' });
   }
 
   handleEditClick = () => {

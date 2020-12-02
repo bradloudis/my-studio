@@ -8,7 +8,7 @@ const {
 /**
  * GET route retrieves assignment, teacher_notes, and all associated tasks FOR TEACHER ACCOUNT
  */
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/student/:id', rejectUnauthenticated, (req, res) => {
   const studentId = req.params.id;
   // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
   const queryText = `SELECT "teacher_notes", "task_item" FROM "assignment"

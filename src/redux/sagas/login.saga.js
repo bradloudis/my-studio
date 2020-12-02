@@ -43,6 +43,8 @@ function* logoutUser(action) {
       withCredentials: true,
     };
 
+    // TODO yield put that clears everything type: CLEAR_EVERYTHING --> each reducer has switch case to set state to default
+
     // the config includes credentials which
     // allow the server session to recognize the user
     // when the server recognizes the user session
