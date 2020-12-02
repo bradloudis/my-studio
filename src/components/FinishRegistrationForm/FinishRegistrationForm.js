@@ -5,7 +5,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 // MATERIAL UI
 import { TextField, Button } from '@material-ui/core';
 
-class RegisterForm extends Component {
+class FinishRegistrationForm extends Component {
   state = {
     username: '',
     password: '',
@@ -13,23 +13,18 @@ class RegisterForm extends Component {
     lastName: '',
     email: '',
     phone: '',
+    instrument: '',
+    tempKey: this.props.tempKey,
   };
 
   registerUser = (event) => {
     event.preventDefault();
 
     this.props.dispatch({
-      type: 'REGISTER_TEACHER',
-      payload: {
-        username: this.state.username,
-        password: this.state.password,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        phone: this.state.phone,
-      },
+      type: 'FINISH_STUDENT_REG',
+      payload: this.state,
     });
-  }; // end registerUser
+  };
 
   handleInputChangeFor = (propertyName) => (event) => {
     this.setState({
@@ -40,7 +35,11 @@ class RegisterForm extends Component {
   render() {
     return (
       <form className="formPanel" onSubmit={this.registerUser}>
-        <h2>Teacher Registration</h2>
+        <h2>
+          Welcome {this.props.store.tempStudent.first_name}{' '}
+          {this.props.store.tempStudent.last_name}!
+        </h2>
+        <p>Please finish registering with My Studio</p>
         {this.props.store.errors.registrationMessage && (
           <h3 className="alert" role="alert">
             {this.props.store.errors.registrationMessage}
@@ -80,6 +79,14 @@ class RegisterForm extends Component {
         </div>
         <div>
           <TextField
+            label="instrument"
+            value={this.state.instrument}
+            onChange={this.handleInputChangeFor('instrument')}
+            required
+          />
+        </div>
+        <div>
+          <TextField
             label="username"
             value={this.state.username}
             onChange={this.handleInputChangeFor('username')}
@@ -105,4 +112,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(RegisterForm);
+export default connect(mapStoreToProps)(FinishRegistrationForm);

@@ -8,8 +8,7 @@ function* registerTeacher(action) {
     // clear any existing error on the registration page
     yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
 
-    // passes the username and password from the payload to the server
-    // TODO!! CHANGE ROUTE FOR TEACHER!!!
+    // passes the username, password, and other credentials from the payload to the server
     yield axios.post('/api/user/register/teacher', action.payload);
 
     // automatically log a user in after registration
@@ -30,7 +29,7 @@ function* registerStudent(action) {
     // clear any existing error on the registration page
     yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
 
-    // passes the username and password from the payload to the server
+    // passes the credentials of the added student from the payload to the server
     yield axios.post('/api/user/register/student', action.payload);
   } catch (error) {
     console.log('Error with student registration:', error);
@@ -38,9 +37,54 @@ function* registerStudent(action) {
   }
 }
 
+function* getTempStudent(action) {
+  try {
+    // clear any existing error on the registration page
+    yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
+
+    // get tempKey for the pre-registered student
+    const response = yield axios.get(
+      `/api/user/register/student/${action.payload}`
+    );
+    // dispatch to set temp student
+    yield put({
+      type: 'SET_TEMP_STUDENT',
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log('Error getting tempKey:', error);
+    yield put({ type: 'REGISTRATION_FAILED_TEMP_STUDENT_NOT_AVAILABLE' });
+  }
+}
+
+function* finishRegistrationStudent(action) {
+  try {
+    // clear any existing error on the registration page
+    yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
+
+    // passes the updated credentials of the student from the payload to the server
+    yield axios.put(
+      `/api/user/register/student/${action.payload.tempKey}`,
+      action.payload
+    );
+
+    // automatically log a user in after registration
+    yield put({ type: 'LOGIN', payload: action.payload });
+
+    // set to 'login' mode so they see the login screen
+    // after registration or after they log out
+    yield put({ type: 'SET_TO_LOGIN_MODE' });
+  } catch (error) {
+    console.log('Error finalizing student registration:', error);
+    yield put({ type: 'REGISTRATION_FAILED' });
+  }
+}
+
 function* registrationSaga() {
   yield takeLatest('REGISTER_TEACHER', registerTeacher);
   yield takeLatest('REGISTER_STUDENT', registerStudent);
+  yield takeLatest('GET_TEMP_STUDENT', getTempStudent);
+  yield takeLatest('FINISH_STUDENT_REG', finishRegistrationStudent);
 }
 
 export default registrationSaga;

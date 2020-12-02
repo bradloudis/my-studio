@@ -23,6 +23,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import AddStudentPage from '../../pages/AddStudentPage/AddStudentPage';
 import StudentDetailsPage from '../../pages/StudentDetailsPage/StudentDetailsPage';
+import RegisterStudentPage from '../../pages/RegisterStudentPage/RegisterStudentPage';
 import AddAssignmentPage from '../../pages/AddAssignmentPage/AddAssignmentPage';
 import JournalPage from '../../pages/JournalPage/JournalPage';
 
@@ -115,6 +116,15 @@ class App extends Component {
               exact
               path="/registration"
               component={RegisterPage}
+              authRedirect="/user"
+            />
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/user"
+              // - else shows RegisterPage at "/registration"
+              exact
+              path="/register-student/:tempKey"
+              component={RegisterStudentPage}
               authRedirect="/user"
             />
             <ProtectedRoute

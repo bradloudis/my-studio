@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import student from './student.reducer';
 import teacherNote from './teacher.notes.reducer';
+import tempStudent from './tempStudent.reducer';
 import assignment from './assignment.reducer';
 import journal from './journal.reducer';
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   student,
   teacherNote,
+  tempStudent,
   assignment,
   journal,
 });

@@ -9,7 +9,7 @@ class LoginPage extends Component {
       <div>
         <LoginForm />
 
-        <center>
+        {/* <center>
           <button
             type="button"
             className="btn btn_asLink"
@@ -19,7 +19,7 @@ class LoginPage extends Component {
           >
             Register
           </button>
-        </center>
+        </center> */}
       </div>
     );
   }

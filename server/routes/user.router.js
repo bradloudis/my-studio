@@ -146,7 +146,7 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
 
                 // create link url for user
                 let registerLinkBase = process.env.HOST_ENV;
-                const registerLink = `${registerLinkBase}/#/register/${tempKey}`;
+                const registerLink = `${registerLinkBase}/#/register-student/${tempKey}`;
 
                 const mailOptions = {
                   from: req.user.email, // sender address
@@ -187,27 +187,60 @@ router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+// GET a user that has the matched temporary ID
+router.get('/register/student/:tempId', (req, res) => {
+  // STEP 1: see if there is a user that matches the "tempId"
+  const queryForTempStudent = `SELECT "first_name", "last_name", "email" FROM "user"
+    WHERE temporary_key = $1;`;
+  pool
+    .query(queryForTempStudent, [req.params.tempId])
+    .then((dbResponse) => {
+      const tempStudent = dbResponse.rows[0];
+
+      if (tempStudent != null) {
+        // STEP 2: send back user info for matched user
+        res.send(tempStudent);
+        return;
+      }
+
+      // STEP 3: if there is no match then send back error 403 FORBIDDEN
+      res.sendStatus(403);
+    })
+    .catch((err) => {
+      logError(err);
+      res.sendStatus(500);
+    });
+});
+
 // Handles PUT request with updated user data for STUDENT (when they finish registration)
-router.put('/register/student/:id', (req, res) => {
-  const queryText = `UPDATE "user" 
-  SET "username"= $1, "password"=$2, "phone_number"=$3, "instrument"=$4, "registration_status"='done' 
-  WHERE "id"=$5;`;
+router.put('/register/student/:tempKey', (req, res) => {
+  const queryForTempStudent = `UPDATE "user" 
+  SET "username"=$1, "password"=$2, "phone_number"=$3, "instrument"=$4, "registration_status"=$5, "temporary_key"=$6  
+  WHERE "temporary_key"=$7;`;
+
+  const { username, phone, instrument } = req.body;
+  const password = encryptLib.encryptPassword(req.body.password);
+  const registrationStatus = 'done';
+
   const queryArray = [
-    req.body.username,
-    encryptLib.encryptPassword(req.body.password),
-    req.body.phone,
-    req.body.instrument,
-    req.params.id,
+    username,
+    password,
+    phone,
+    instrument,
+    registrationStatus,
+    null,
+    req.params.tempKey,
   ];
 
   pool
-    .query(queryText, queryArray)
-    .then((response) => {
+    .query(queryForTempStudent, queryArray)
+    .then(() => {
       res.sendStatus(200);
     })
     .catch((err) => {
       console.log(err);
-      res.sendStatus(500);
+      // if no match send error 403 FORBIDDEN
+      res.sendStatus(403);
     });
 });
 
