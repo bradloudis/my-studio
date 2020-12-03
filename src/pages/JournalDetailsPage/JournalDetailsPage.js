@@ -16,6 +16,12 @@ class JournalDetailsPage extends Component {
       type: 'GET_JOURNAL_NOTE_DETAILS',
       payload: this.props.match.params.id,
     });
+
+    // gets the tasks for journal item
+    this.props.dispatch({
+      type: 'GET_JOURNAL_TASK_ITEMS',
+      payload: this.props.match.params.id,
+    });
   }
   render() {
     return (

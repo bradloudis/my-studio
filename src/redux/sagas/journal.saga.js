@@ -30,9 +30,26 @@ function* journalNoteDetails(action) {
   }
 }
 
+// gets task items for specific journal item from DB
+function* journalTaskItems(action) {
+  try {
+    const journalTaskItems = yield axios.get(
+      `/api/journal/get-task/${action.payload}`
+    );
+    console.log('JOURNAL Task', journalTaskItems);
+    // yield put({
+    //   type: 'SET_JOURNAL_TASK_ITEMS',
+    //   payload: journalTaskItems.data,
+    // });
+  } catch (error) {
+    console.log('Could not get journal task items', error);
+  }
+}
+
 function* journalSaga() {
   yield takeLatest('GET_ALL_JOURNALS', getAllJournals);
   yield takeLatest('GET_JOURNAL_NOTE_DETAILS', journalNoteDetails);
+  yield takeLatest('GET_JOURNAL_TASK_ITEMS', journalTaskItems);
 }
 
 export default journalSaga;
