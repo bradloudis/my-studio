@@ -82,6 +82,16 @@ router.post('/post-tasks', rejectUnauthenticated, (req, res) => {
 
   queryText = `INSERT INTO "journal" (task_id, complete_status, date, user_id)
   VALUES ($1, $2, $3, $4);`;
+
+  pool
+    .query(queryText, [taskId, completeStatus, date, studentId])
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('problem adding task to journal', err);
+      res.sendStatus(500);
+    });
 });
 
 /**
