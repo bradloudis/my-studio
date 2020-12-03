@@ -25,7 +25,7 @@ class AddJournalPage extends Component {
                 <CurrentAssignment />
               </Grid>
               <Grid item xs={9}>
-                <AddJournalForm />
+                <AddJournalForm assignment={this.props.store.assignment} />
               </Grid>
             </Grid>
           </Box>
