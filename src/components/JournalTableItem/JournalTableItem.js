@@ -6,7 +6,9 @@ import { TableRow, TableCell } from '@material-ui/core';
 
 class JournalTableItem extends Component {
   journalItemClick = () => {
-    console.log('journal item click');
+    console.log('journal item click', this.props.journalItem.id);
+    // push student to Journal Item Detail page
+    this.props.history.push(`/journal-details/${this.props.journalItem.id}`);
   };
 
   render() {
