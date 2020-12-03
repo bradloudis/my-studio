@@ -71,16 +71,40 @@ router.get('/get-note/:id', rejectUnauthenticated, (req, res) => {
 
 /**
  * POST route handles adding task and complete status to DB
+ * hmmmmmm this query will work for one task BUT how will i handle both tasks?? even if its 2 calls??
+ * need to figure that out from client side or is it going to be two separate API endpoints??
  */
 router.post('/post-tasks', rejectUnauthenticated, (req, res) => {
-  // POST route code here
+  const taskId = req.body.taskId;
+  const completeStatus = req.body.completeStatus;
+  const date = req.body.date;
+  const studentId = req.user.id;
+
+  queryText = `INSERT INTO "journal" (task_id, complete_status, date, user_id)
+  VALUES ($1, $2, $3, $4);`;
 });
 
 /**
  * POST route handles adding student's notes to DB
  */
 router.post('/post-note', rejectUnauthenticated, (req, res) => {
-  // POST route code here
+  const notes = req.body.notes;
+  const date = req.body.date;
+  const studentId = req.user.id;
+  const assignmentId = req.body.assignmentId;
+
+  queryText = `INSERT INTO "journal" (notes, date, user_id, assignment_id)
+  VALUES ($1, $2, $3, $4);`;
+
+  pool
+    .query(queryText, [notes, date, studentId, assignmentId])
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('problem saving journal note to DB', err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
