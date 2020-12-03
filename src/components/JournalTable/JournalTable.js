@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
 import {
@@ -11,6 +12,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Button,
 } from '@material-ui/core';
 
 // CUSTOM COMPONENTS
@@ -23,10 +25,18 @@ class JournalTable extends Component {
     });
   }
 
+  addJournalClick = () => {
+    console.log('add journal click');
+    this.props.history.push('/add-journal');
+  };
+
   render() {
     return (
       <Container>
         <h1>Journal Page</h1>
+        <Button variant="contained" onClick={this.addJournalClick}>
+          ADD PRACTICE JOURNAL
+        </Button>
         {this.props.store.journal.allJournalsReducer.length != 0 ? (
           <TableContainer>
             <Table>
@@ -54,4 +64,4 @@ class JournalTable extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(JournalTable);
+export default withRouter(connect(mapStoreToProps)(JournalTable));
