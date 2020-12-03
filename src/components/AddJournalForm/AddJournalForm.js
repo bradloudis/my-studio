@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
 import {
@@ -43,13 +44,13 @@ class AddJournalForm extends Component {
         assignmentId: this.props.assignment[0].assignment_id,
       },
     });
+    this.props.history.push('/journal');
   };
 
   render() {
     return (
       <Container>
         <h2>JOURNAL FORM</h2>
-        {JSON.stringify(this.props.assignment)}
         <Grid container spacing={3}>
           <Grid item>
             <Grid container spacing={2}>
@@ -117,4 +118,4 @@ class AddJournalForm extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(AddJournalForm);
+export default withRouter(connect(mapStoreToProps)(AddJournalForm));
