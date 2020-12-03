@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // CUSTOM COMPONENTS
 import CurrentAssignment from '../../components/CurrentAssignment/CurrentAssignment';
+import AddJournalForm from '../../components/AddJournalForm/AddJournalForm';
 
 // MATERIAL UI
 import { Container, Box, Grid } from '@material-ui/core';
@@ -24,7 +25,7 @@ class AddJournalPage extends Component {
                 <CurrentAssignment />
               </Grid>
               <Grid item xs={9}>
-                <h2>JOURNAL FORM</h2>
+                <AddJournalForm />
               </Grid>
             </Grid>
           </Box>
