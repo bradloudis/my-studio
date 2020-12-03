@@ -62,7 +62,7 @@ router.get('/get-note/:id', rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [studentId, req.params.id])
     .then((dbResponse) => {
-      res.send(dbResponse.rows);
+      res.send(dbResponse.rows[0]);
     })
     .catch((err) => {
       console.log('problem getting student note', err);

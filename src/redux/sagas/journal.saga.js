@@ -22,11 +22,11 @@ function* journalNoteDetails(action) {
     );
     console.log('JOURNAL DEEEEEEETS', journalNoteDetails);
     yield put({
-      type: 'SET_STUDENT_DETAILS',
+      type: 'SET_JOURNAL_NOTE_DETAILS',
       payload: journalNoteDetails.data,
     });
   } catch (error) {
-    console.log('Could not get student details!', error);
+    console.log('Could not get journal note details!', error);
   }
 }
 
