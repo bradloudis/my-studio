@@ -33,7 +33,7 @@ router.get('/student-page', rejectUnauthenticated, (req, res) => {
   const studentId = req.user.id;
   console.log(studentId);
   // note - LIMIT is 2 because teacher only has ability to add 2 tasks to a single assignment
-  const queryText = `SELECT "teacher_notes", "task_item" FROM "assignment"
+  const queryText = `SELECT "teacher_notes", "task_item", "assignment_id" FROM "assignment"
   JOIN "task" ON "assignment".id = "task".assignment_id
   JOIN "user" ON "assignment".student_id = "user".id
   WHERE "user".id = $1
