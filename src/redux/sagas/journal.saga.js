@@ -49,16 +49,21 @@ function* journalTaskItems(action) {
 // posts new journal item and calls to allJournals reducer
 function* saveJournal(action) {
   try {
-    // const notePayload = {
-    //   notes: action.payload.notes,
-    //   date: action.payload.date,
-    //   assignmentId: action.payload.assignmentId,
-    // }
-    // yield axios.post('/api/journal/post-note', {
-    //   notes: action.payload.notes,
-    //   date: action.payload.date,
-    //   assignmentId: action.payload.assignmentId,
-    // })
+    // first POST handles the student's note
+    yield axios.post('/api/journal/post-note', {
+      notes: action.payload.notes,
+      assignmentId: action.payload.assignmentId,
+    });
+    // second POST handles first task and complete status
+    yield axios.post('/api/journal/post-tasks', {
+      taskId: action.payload.taskItemOne,
+      completeStatus: action.payload.taskItemOneBool,
+    });
+    // third POST handles second task and complete status
+    yield axios.post('/api/journal/post-tasks', {
+      taskId: action.payload.taskItemTwo,
+      completeStatus: action.payload.taskItemTwoBool,
+    });
   } catch (error) {
     console.log('Could not save new journal entry!', error);
   }
