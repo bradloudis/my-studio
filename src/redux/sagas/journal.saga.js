@@ -56,12 +56,12 @@ function* saveJournal(action) {
     });
     // second POST handles first task and complete status
     yield axios.post('/api/journal/post-tasks', {
-      taskId: action.payload.taskItemOne,
+      taskId: action.payload.taskItemOneId,
       completeStatus: action.payload.taskItemOneBool,
     });
     // third POST handles second task and complete status
     yield axios.post('/api/journal/post-tasks', {
-      taskId: action.payload.taskItemTwo,
+      taskId: action.payload.taskItemTwoId,
       completeStatus: action.payload.taskItemTwoBool,
     });
   } catch (error) {

@@ -38,8 +38,8 @@ class AddJournalForm extends Component {
       type: 'SUBMIT_JOURNAL_ENTRY',
       payload: {
         ...this.state,
-        taskItemOne: this.props.assignment[0].task_item,
-        taskItemTwo: this.props.assignment[1].task_item,
+        taskItemOneId: this.props.assignment[0].id,
+        taskItemTwoId: this.props.assignment[1].id,
         assignmentId: this.props.assignment[0].assignment_id,
       },
     });
@@ -49,6 +49,7 @@ class AddJournalForm extends Component {
     return (
       <Container>
         <h2>JOURNAL FORM</h2>
+        {JSON.stringify(this.props.assignment)}
         <Grid container spacing={3}>
           <Grid item>
             <Grid container spacing={2}>
