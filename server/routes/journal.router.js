@@ -54,7 +54,22 @@ router.get('/get-task', rejectUnauthenticated, (req, res) => {
  * GET route handles getting note for 'journal details' page
  */
 router.get('/get-note', rejectUnauthenticated, (req, res) => {
-  // GET route code here
+  const queryText = `SELECT * FROM "journal"
+  JOIN "assignment" ON "journal".assignment_id="assignment".id
+  WHERE "journal".user_id=$1 AND "assignment".id=$2;`;
+
+  const studentId = req.user.id;
+  const assignmentId = req.body.assignmentId;
+
+  pool
+    .query(queryText, [studentId, assignmentId])
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('problem getting student note', err);
+      res.sendStatus(500);
+    });
 });
 
 /**
