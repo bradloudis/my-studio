@@ -30,12 +30,10 @@ class JournalDetailsPage extends Component {
       <Container>
         <h1>JournalDetailsPage</h1>
 
-        {JSON.stringify(this.props.match.params.id)}
-
         {this.props.store.journal.journalTaskItems.map((item, index) => {
           return (
-            <div>
-              <p key={index}>
+            <div key={index}>
+              <p>
                 {item.task_item}
                 <span>
                   {item.complete_status ? (
@@ -48,6 +46,7 @@ class JournalDetailsPage extends Component {
             </div>
           );
         })}
+        <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
       </Container>
     );
   }
