@@ -12,6 +12,25 @@ import {
 } from '@material-ui/core';
 
 class AddJournalForm extends Component {
+  state = {
+    taskItemOne: null,
+    taskItemOneBool: false,
+    taskItemTwo: null,
+    taskItemTwoBool: false,
+    notes: '',
+  };
+
+  handleSelectChange = (propertyName) => (event) => {
+    this.setState(
+      {
+        [propertyName]: event.target.value,
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  };
+
   render() {
     return (
       <Container>
@@ -29,7 +48,10 @@ class AddJournalForm extends Component {
           <Grid item>
             <FormControl>
               <InputLabel>yes/no</InputLabel>
-              <Select>
+              <Select
+                value={this.state.taskItemOneBool}
+                onChange={this.handleSelectChange('taskItemOneBool')}
+              >
                 <MenuItem value={true}>yes</MenuItem>
                 <MenuItem value={false}>no</MenuItem>
               </Select>
@@ -49,7 +71,10 @@ class AddJournalForm extends Component {
           <Grid item>
             <FormControl>
               <InputLabel>yes/no</InputLabel>
-              <Select>
+              <Select
+                value={this.state.taskItemTwoBool}
+                onChange={this.handleSelectChange('taskItemTwoBool')}
+              >
                 <MenuItem value={true}>yes</MenuItem>
                 <MenuItem value={false}>no</MenuItem>
               </Select>
