@@ -27,6 +27,7 @@ import RegisterStudentPage from '../../pages/RegisterStudentPage/RegisterStudent
 import AddAssignmentPage from '../../pages/AddAssignmentPage/AddAssignmentPage';
 import JournalPage from '../../pages/JournalPage/JournalPage';
 import AddJournalPage from '../../pages/AddJournalPage/AddJournalPage';
+import JournalDetailsPage from '../../pages/JournalDetailsPage/JournalDetailsPage';
 
 import './App.css';
 
@@ -96,6 +97,13 @@ class App extends Component {
               exact
               path="/journal"
               component={JournalPage}
+            />
+
+            <ProtectedRoute
+              // logged in shows journal item details page else shows LoginPage
+              exact
+              path="/journal-details/:id"
+              component={JournalDetailsPage}
             />
 
             <ProtectedRoute
