@@ -77,14 +77,13 @@ router.get('/get-note/:id', rejectUnauthenticated, (req, res) => {
 router.post('/post-tasks', rejectUnauthenticated, (req, res) => {
   const taskId = req.body.taskId;
   const completeStatus = req.body.completeStatus;
-  const date = req.body.date;
   const studentId = req.user.id;
 
   queryText = `INSERT INTO "journal" (task_id, complete_status, date, user_id)
-  VALUES ($1, $2, $3, $4);`;
+  VALUES ($1, $2, CURRENT_TIMESTAMP, $3);`;
 
   pool
-    .query(queryText, [taskId, completeStatus, date, studentId])
+    .query(queryText, [taskId, completeStatus, studentId])
     .then(() => {
       res.sendStatus(201);
     })
@@ -99,15 +98,14 @@ router.post('/post-tasks', rejectUnauthenticated, (req, res) => {
  */
 router.post('/post-note', rejectUnauthenticated, (req, res) => {
   const notes = req.body.notes;
-  const date = req.body.date;
   const studentId = req.user.id;
   const assignmentId = req.body.assignmentId;
 
   queryText = `INSERT INTO "journal" (notes, date, user_id, assignment_id)
-  VALUES ($1, $2, $3, $4);`;
+  VALUES ($1, CURRENT_TIMESTAMP, $2, $3);`;
 
   pool
-    .query(queryText, [notes, date, studentId, assignmentId])
+    .query(queryText, [notes, studentId, assignmentId])
     .then(() => {
       res.sendStatus(201);
     })
