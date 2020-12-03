@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // MATERIAL UI
 import {
@@ -13,22 +15,26 @@ import {
 
 class AddJournalForm extends Component {
   state = {
-    taskItemOne: null,
     taskItemOneBool: false,
-    taskItemTwo: null,
     taskItemTwoBool: false,
     notes: '',
   };
 
   handleSelectChange = (propertyName) => (event) => {
-    this.setState(
-      {
-        [propertyName]: event.target.value,
+    this.setState({
+      [propertyName]: event.target.value,
+    });
+  };
+
+  handleClickSubmit = () => {
+    this.props.dispatch({
+      type: 'SUBMIT_JOURNAL_ENTRY',
+      payload: {
+        ...this.state,
+        taskItemOne: this.props.assignment[0].task_item,
+        taskItemTwo: this.props.assignment[1].task_item,
       },
-      () => {
-        console.log(this.state);
-      }
-    );
+    });
   };
 
   render() {
@@ -81,9 +87,12 @@ class AddJournalForm extends Component {
             </FormControl>
           </Grid>
         </Grid>
+        <Button variant="contained" onClick={this.handleClickSubmit}>
+          SUBMIT
+        </Button>
       </Container>
     );
   }
 }
 
-export default AddJournalForm;
+export default connect(mapStoreToProps)(AddJournalForm);
