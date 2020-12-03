@@ -4,12 +4,11 @@ const router = express.Router();
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
-const { query } = require('../modules/pool');
 
 /**
  * GET route handles getting ALL journals for a specific student
  */
-router.get('/all', (req, res) => {
+router.get('/get-all-journals', (req, res) => {
   const queryText = `SELECT * FROM "journal"
   JOIN "assignment" ON "journal".assignment_id="assignment".id
   WHERE "journal".user_id=$1
@@ -18,7 +17,7 @@ router.get('/all', (req, res) => {
   pool
     .query(queryText, [req.user.id])
     .then((dbResponse) => {
-      console.log(dbResponse.rows);
+      // console.log(dbResponse.rows);
       res.send(dbResponse.rows);
     })
     .catch((err) => {
@@ -53,16 +52,15 @@ router.get('/get-task', rejectUnauthenticated, (req, res) => {
 /**
  * GET route handles getting note for 'journal details' page
  */
-router.get('/get-note', rejectUnauthenticated, (req, res) => {
+router.get('/get-note/:id', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "journal"
   JOIN "assignment" ON "journal".assignment_id="assignment".id
   WHERE "journal".user_id=$1 AND "assignment".id=$2;`;
 
   const studentId = req.user.id;
-  const assignmentId = req.body.assignmentId;
 
   pool
-    .query(queryText, [studentId, assignmentId])
+    .query(queryText, [studentId, req.params.id])
     .then((dbResponse) => {
       res.send(dbResponse.rows);
     })
