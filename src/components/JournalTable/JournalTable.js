@@ -27,7 +27,7 @@ class JournalTable extends Component {
     return (
       <Container>
         <h1>Journal Page</h1>
-        {this.props.store.journal.length != 0 ? (
+        {this.props.store.journal.allJournalsReducer.length != 0 ? (
           <TableContainer>
             <Table>
               <TableHead>
@@ -38,9 +38,11 @@ class JournalTable extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.store.journal.map((item, index) => {
-                  return <JournalTableItem journalItem={item} key={index} />;
-                })}
+                {this.props.store.journal.allJournalsReducer.map(
+                  (item, index) => {
+                    return <JournalTableItem journalItem={item} key={index} />;
+                  }
+                )}
               </TableBody>
             </Table>
           </TableContainer>

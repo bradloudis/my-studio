@@ -37,10 +37,10 @@ function* journalTaskItems(action) {
       `/api/journal/get-task/${action.payload}`
     );
     console.log('JOURNAL Task', journalTaskItems);
-    // yield put({
-    //   type: 'SET_JOURNAL_TASK_ITEMS',
-    //   payload: journalTaskItems.data,
-    // });
+    yield put({
+      type: 'SET_JOURNAL_TASK_ITEMS',
+      payload: journalTaskItems.data,
+    });
   } catch (error) {
     console.log('Could not get journal task items', error);
   }
