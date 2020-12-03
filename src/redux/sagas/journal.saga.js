@@ -20,7 +20,7 @@ function* journalNoteDetails(action) {
     const journalNoteDetails = yield axios.get(
       `/api/journal/get-note/${action.payload}`
     );
-    console.log('JOURNAL DEEEEEEETS', journalNoteDetails);
+    // console.log('JOURNAL DEEEEEEETS', journalNoteDetails);
     yield put({
       type: 'SET_JOURNAL_NOTE_DETAILS',
       payload: journalNoteDetails.data,
@@ -36,7 +36,7 @@ function* journalTaskItems(action) {
     const journalTaskItems = yield axios.get(
       `/api/journal/get-task/${action.payload}`
     );
-    console.log('JOURNAL Task', journalTaskItems);
+    // console.log('JOURNAL Task', journalTaskItems);
     yield put({
       type: 'SET_JOURNAL_TASK_ITEMS',
       payload: journalTaskItems.data,
