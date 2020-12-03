@@ -49,7 +49,6 @@ class AddJournalForm extends Component {
     return (
       <Container>
         <h2>JOURNAL FORM</h2>
-        {JSON.stringify(this.props.assignment)}
         <Grid container spacing={3}>
           <Grid item>
             <Grid container spacing={2}>
