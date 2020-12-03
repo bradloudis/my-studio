@@ -46,10 +46,29 @@ function* journalTaskItems(action) {
   }
 }
 
+// posts new journal item and calls to allJournals reducer
+function* saveJournal(action) {
+  try {
+    // const notePayload = {
+    //   notes: action.payload.notes,
+    //   date: action.payload.date,
+    //   assignmentId: action.payload.assignmentId,
+    // }
+    // yield axios.post('/api/journal/post-note', {
+    //   notes: action.payload.notes,
+    //   date: action.payload.date,
+    //   assignmentId: action.payload.assignmentId,
+    // })
+  } catch (error) {
+    console.log('Could not save new journal entry!', error);
+  }
+}
+
 function* journalSaga() {
   yield takeLatest('GET_ALL_JOURNALS', getAllJournals);
   yield takeLatest('GET_JOURNAL_NOTE_DETAILS', journalNoteDetails);
   yield takeLatest('GET_JOURNAL_TASK_ITEMS', journalTaskItems);
+  yield takeLatest('SUBMIT_JOURNAL_ENTRY', saveJournal);
 }
 
 export default journalSaga;
