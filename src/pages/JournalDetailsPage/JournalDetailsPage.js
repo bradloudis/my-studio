@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import { Container, Box, Grid, Button } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 class JournalDetailsPage extends Component {
   componentDidMount() {
@@ -27,6 +29,10 @@ class JournalDetailsPage extends Component {
     this.props.history.push('/journal');
   };
 
+  handleDeleteClick = () => {
+    console.log(this.props.journalItem.id);
+  };
+
   render() {
     return (
       <Container>
@@ -39,23 +45,37 @@ class JournalDetailsPage extends Component {
               </Button>
             </Box>
             <Box className="formPanel">
-              {this.props.store.journal.journalTaskItems.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <p>
-                      {item.task_item}
-                      <span>
-                        {item.complete_status ? (
-                          <DoneIcon></DoneIcon>
-                        ) : (
-                          <ClearIcon></ClearIcon>
-                        )}
-                      </span>
-                    </p>
-                  </div>
-                );
-              })}
-              <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
+              <Grid container>
+                <Grid item xs={2}>
+                  <Button>
+                    <EditIcon />
+                  </Button>
+                  <Button>
+                    <DeleteIcon onClick={this.handleDeleteClick} />
+                  </Button>
+                </Grid>
+                <Grid item xs={10}>
+                  {this.props.store.journal.journalTaskItems.map(
+                    (item, index) => {
+                      return (
+                        <div key={index}>
+                          <p>
+                            {item.task_item}
+                            <span>
+                              {item.complete_status ? (
+                                <DoneIcon></DoneIcon>
+                              ) : (
+                                <ClearIcon></ClearIcon>
+                              )}
+                            </span>
+                          </p>
+                        </div>
+                      );
+                    }
+                  )}
+                  <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
         </Grid>
