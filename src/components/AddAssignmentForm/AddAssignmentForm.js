@@ -47,6 +47,7 @@ class AddAssignmentForm extends Component {
           <TextField
             label="task one"
             value={this.state.taskItemOne}
+            fullWidth
             onChange={this.handleInputChangeFor('taskItemOne')}
             required
           />
@@ -55,6 +56,7 @@ class AddAssignmentForm extends Component {
           <TextField
             label="task two"
             value={this.state.taskItemTwo}
+            fullWidth
             onChange={this.handleInputChangeFor('taskItemTwo')}
             required
           />
@@ -65,7 +67,8 @@ class AddAssignmentForm extends Component {
             value={this.state.teacherNotes}
             onChange={this.handleInputChangeFor('teacherNotes')}
             multiline
-            rows={4}
+            rows={8}
+            fullWidth
             required
           />
         </div>
