@@ -4,7 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
-import { Container } from '@material-ui/core';
+import { Container, Box, Grid, Button } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 
@@ -25,28 +25,43 @@ class JournalDetailsPage extends Component {
       payload: this.props.match.params.id,
     });
   }
+
+  handleBackClick = () => {
+    this.props.history.push('/journal');
+  };
+
   render() {
     return (
       <Container>
-        <h1>JournalDetailsPage</h1>
-
-        {this.props.store.journal.journalTaskItems.map((item, index) => {
-          return (
-            <div key={index}>
-              <p>
-                {item.task_item}
-                <span>
-                  {item.complete_status ? (
-                    <DoneIcon></DoneIcon>
-                  ) : (
-                    <ClearIcon></ClearIcon>
-                  )}
-                </span>
-              </p>
-            </div>
-          );
-        })}
-        <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
+        <Grid container justify="space-evenly">
+          <Grid item>
+            <h1>JournalDetailsPage</h1>
+            <Box mb={2}>
+              <Button variant="contained" onClick={this.handleBackClick}>
+                BACK
+              </Button>
+            </Box>
+            <Box className="formPanel">
+              {this.props.store.journal.journalTaskItems.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <p>
+                      {item.task_item}
+                      <span>
+                        {item.complete_status ? (
+                          <DoneIcon></DoneIcon>
+                        ) : (
+                          <ClearIcon></ClearIcon>
+                        )}
+                      </span>
+                    </p>
+                  </div>
+                );
+              })}
+              <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
+            </Box>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
