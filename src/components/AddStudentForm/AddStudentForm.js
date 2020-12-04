@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 // SWEET ALERT
 import Swal from 'sweetalert2';
 // MATERIAL UI
-import { Button, TextField, Box } from '@material-ui/core';
+import { Button, TextField, Box, Card, CardContent } from '@material-ui/core';
 
 class AddStudentForm extends Component {
   state = {

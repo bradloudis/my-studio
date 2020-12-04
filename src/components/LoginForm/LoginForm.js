@@ -4,7 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL UI
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Box } from '@material-ui/core';
 
 class LoginForm extends Component {
   state = {
@@ -60,11 +60,11 @@ class LoginForm extends Component {
             required
           />
         </div>
-        <div>
+        <Box mt={2}>
           <Button type="submit" variant="contained">
             LOG IN
           </Button>
-        </div>
+        </Box>
       </form>
     );
   }

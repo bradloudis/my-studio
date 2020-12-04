@@ -49,12 +49,12 @@ class AddJournalForm extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="formPanel">
         <h2>JOURNAL FORM</h2>
         <Grid container spacing={3}>
-          <Grid item>
-            <Grid container spacing={2}>
-              <Grid item>
+          <Grid item xs={4}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={9}>
                 <p>
                   <strong>Did you?</strong>
                 </p>
@@ -63,7 +63,7 @@ class AddJournalForm extends Component {
                     this.props.assignment[0].task_item}
                 </p>
               </Grid>
-              <Grid item>
+              <Grid item xs={3}>
                 <FormControl>
                   <InputLabel>yes/no</InputLabel>
                   <Select
@@ -77,7 +77,7 @@ class AddJournalForm extends Component {
               </Grid>
             </Grid>
             <Grid container spacing={2}>
-              <Grid item>
+              <Grid item xs={9}>
                 <p>
                   <strong>Did you?</strong>
                 </p>
@@ -86,7 +86,7 @@ class AddJournalForm extends Component {
                     this.props.assignment[1].task_item}
                 </p>
               </Grid>
-              <Grid item>
+              <Grid item xs={3}>
                 <FormControl>
                   <InputLabel>yes/no</InputLabel>
                   <Select
@@ -100,11 +100,12 @@ class AddJournalForm extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item>
+          <Grid item xs={8}>
             <TextField
               label="note"
               multiline
-              rows={4}
+              rows={8}
+              fullWidth
               value={this.state.notes}
               onChange={this.handleInputChangeFor('notes')}
             />

@@ -13,6 +13,7 @@ import {
   TableCell,
   TableBody,
   Button,
+  Box,
 } from '@material-ui/core';
 
 // CUSTOM COMPONENTS
@@ -34,11 +35,13 @@ class JournalTable extends Component {
     return (
       <Container>
         <h1>Journal Page</h1>
-        <Button variant="contained" onClick={this.addJournalClick}>
-          ADD PRACTICE JOURNAL
-        </Button>
+        <Box mb={2}>
+          <Button variant="contained" onClick={this.addJournalClick}>
+            ADD PRACTICE JOURNAL
+          </Button>
+        </Box>
         {this.props.store.journal.allJournalsReducer.length != 0 ? (
-          <TableContainer>
+          <TableContainer className="formPanel">
             <Table>
               <TableHead>
                 <TableRow>

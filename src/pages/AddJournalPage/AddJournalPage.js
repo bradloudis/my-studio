@@ -20,7 +20,7 @@ class AddJournalPage extends Component {
         {this.props.store.user.access_level_id === 2 ? (
           <Box>
             <h1>Add Journal Entry</h1>
-            <Grid container>
+            <Grid container spacing={2}>
               <Grid item xs={3}>
                 <CurrentAssignment />
               </Grid>

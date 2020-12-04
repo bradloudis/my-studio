@@ -3,7 +3,7 @@ import './StudentListItem.css';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL-UI
-import { Card, CardActionArea } from '@material-ui/core';
+import { Card, CardActionArea, CardContent, Box } from '@material-ui/core';
 
 class StudentListItem extends Component {
   handleStudentClick = () => {
@@ -16,18 +16,23 @@ class StudentListItem extends Component {
   render() {
     return (
       <Card>
-        <CardActionArea onClick={this.handleStudentClick}>
-          {this.props.student.profile_picture ? (
-            <p>PROFILE PICTURE</p>
-          ) : (
-            <img
-              src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
-              alt="not found"
-              className="blankProfileImg"
-            />
-          )}
-          <p>{this.props.student.first_name}</p>
-        </CardActionArea>
+        <CardContent>
+          <CardActionArea onClick={this.handleStudentClick}>
+            {this.props.student.profile_picture ? (
+              <p>PROFILE PICTURE</p>
+            ) : (
+              <img
+                src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
+                alt="not found"
+                className="blankProfileImg"
+              />
+            )}
+
+            <h4>
+              {this.props.student.first_name} {this.props.student.last_name}
+            </h4>
+          </CardActionArea>
+        </CardContent>
       </Card>
     );
   }

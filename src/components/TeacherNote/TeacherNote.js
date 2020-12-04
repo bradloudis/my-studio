@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // MATERIAL UI
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Box } from '@material-ui/core';
 
 class TeacherNote extends Component {
   state = {
@@ -70,7 +70,7 @@ class TeacherNote extends Component {
 
   render() {
     return (
-      <div>
+      <div className="formPanel">
         <h2>Notes</h2>
 
         {this.state.displayEditField ? (
@@ -82,10 +82,12 @@ class TeacherNote extends Component {
               value={this.state.note}
               onChange={this.handleInputChangeFor('note')}
             />
-            <div>
-              <Button variant="contained" onClick={this.handleCancelClick}>
-                CANCEL
-              </Button>
+            <Box mt={2}>
+              <Box component="span" mr={1}>
+                <Button variant="contained" onClick={this.handleCancelClick}>
+                  CANCEL
+                </Button>
+              </Box>
               {this.props.store.teacherNote.note ? (
                 <Button variant="contained" onClick={this.handleUpdateClick}>
                   UPDATE
@@ -95,19 +97,23 @@ class TeacherNote extends Component {
                   SAVE
                 </Button>
               )}
-            </div>
+            </Box>
           </div>
         ) : (
           <div>
             <p>{this.props.store.teacherNote.note}</p>
             {this.props.store.teacherNote.note ? (
-              <Button variant="contained" onClick={this.handleEditClick}>
-                EDIT
-              </Button>
+              <Box mt={2}>
+                <Button variant="contained" onClick={this.handleEditClick}>
+                  EDIT
+                </Button>
+              </Box>
             ) : (
-              <Button variant="contained" onClick={this.handleAddClick}>
-                ADD
-              </Button>
+              <Box mt={2}>
+                <Button variant="contained" onClick={this.handleAddClick}>
+                  ADD
+                </Button>
+              </Box>
             )}
           </div>
         )}
