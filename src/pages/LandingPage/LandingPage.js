@@ -62,7 +62,7 @@ class LandingPage extends Component {
               pretium in sit amet nisi.
             </p>
           </div>
-          <div className="grid-col grid-col_4">
+          <div className="grid-col grid-col_4" className="formPanel">
             {/* <RegisterForm /> */}
             <center>
               <h4>Need an account?</h4>
