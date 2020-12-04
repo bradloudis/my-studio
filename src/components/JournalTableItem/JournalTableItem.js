@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 //import for date/time config
-const { DateTime } = require('luxon');
+import { DateTime } from 'luxon';
 
 class JournalTableItem extends Component {
   journalItemClick = () => {
