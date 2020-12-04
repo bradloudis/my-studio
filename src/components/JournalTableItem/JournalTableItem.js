@@ -13,6 +13,10 @@ class JournalTableItem extends Component {
     this.props.history.push(`/journal-details/${this.props.journalItem.id}`);
   };
 
+  handleDeleteClick = () => {
+    console.log(this.props.journalItem.id);
+  };
+
   render() {
     return (
       <TableRow onClick={this.journalItemClick}>
@@ -23,7 +27,7 @@ class JournalTableItem extends Component {
             <EditIcon />
           </Button>
           <Button>
-            <DeleteIcon />
+            <DeleteIcon onClick={this.handleDeleteClick} />
           </Button>
         </TableCell>
       </TableRow>

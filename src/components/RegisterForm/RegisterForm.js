@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // MATERIAL UI
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Box } from '@material-ui/core';
 
 class RegisterForm extends Component {
   state = {
@@ -96,9 +96,11 @@ class RegisterForm extends Component {
           />
         </div>
         <div>
-          <Button type="submit" variant="contained">
-            SUBMIT
-          </Button>
+          <Box mt={2}>
+            <Button type="submit" variant="contained">
+              SUBMIT
+            </Button>
+          </Box>
         </div>
       </form>
     );
