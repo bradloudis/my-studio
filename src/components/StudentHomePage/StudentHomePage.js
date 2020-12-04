@@ -23,7 +23,7 @@ class StudentHomePage extends Component {
     return (
       <Container>
         <h1>STUDENT</h1>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItem="center">
           <Grid item xs={4}>
             {this.props.store.user.profile_picture ? (
               <p>PROFILE PICTURE</p>
