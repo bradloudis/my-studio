@@ -79,6 +79,7 @@ class TeacherNote extends Component {
               label={this.props.store.teacherNote.note}
               multiline
               rows={4}
+              fullWidth
               value={this.state.note}
               onChange={this.handleInputChangeFor('note')}
             />
