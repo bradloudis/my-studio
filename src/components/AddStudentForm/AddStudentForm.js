@@ -35,7 +35,7 @@ class AddStudentForm extends Component {
 
     Swal.fire({
       title: 'Success!',
-      text: `${this.state.firstName} has been successfully added to your studio!`,
+      text: `${this.state.firstName} has been successfully added to your studio and will receive an email to complete registration.`,
       icon: 'success',
       confirmButtonText: `Ok`,
       allowOutsideClick: false,
