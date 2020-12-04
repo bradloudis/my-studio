@@ -45,16 +45,8 @@ class JournalDetailsPage extends Component {
               </Button>
             </Box>
             <Box className="formPanel">
-              <Grid container>
-                <Grid item xs={2}>
-                  <Button>
-                    <EditIcon />
-                  </Button>
-                  <Button>
-                    <DeleteIcon onClick={this.handleDeleteClick} />
-                  </Button>
-                </Grid>
-                <Grid item xs={10}>
+              <Grid container justify="space-evenly">
+                <Grid item>
                   {this.props.store.journal.journalTaskItems.map(
                     (item, index) => {
                       return (
@@ -76,6 +68,18 @@ class JournalDetailsPage extends Component {
                   <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
                 </Grid>
               </Grid>
+              <Box mt={3}>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Button>
+                      <EditIcon />
+                    </Button>
+                    <Button>
+                      <DeleteIcon onClick={this.handleDeleteClick} />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
             </Box>
           </Grid>
         </Grid>
