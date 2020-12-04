@@ -30,15 +30,13 @@ class LandingPage extends Component {
       allowOutsideClick: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('you are a teacher');
+        this.props.history.push('/registration');
       } else if (result.isDenied) {
-        console.log('you are a student');
         Swal.fire(
           'Please wait for an email from your teacher inviting you to register your account!'
         );
       }
     });
-    // this.props.history.push('/registration');
   };
 
   render() {
