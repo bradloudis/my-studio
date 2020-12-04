@@ -102,7 +102,7 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows journal item details page else shows LoginPage
               exact
-              path="/journal-details/:id"
+              path="/journal-details/:id/:assignmentId"
               component={JournalDetailsPage}
             />
 

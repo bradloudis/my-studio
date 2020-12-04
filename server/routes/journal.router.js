@@ -5,11 +5,13 @@ const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+const { DateTime } = require('luxon');
+
 /**
  * GET route handles getting ALL journals for a specific student
  */
 router.get('/get-all-journals', (req, res) => {
-  const queryText = `SELECT * FROM "journal"
+  const queryText = `SELECT *, "journal".id, "assignment".id as assignmentId FROM "journal"
   JOIN "assignment" ON "journal".assignment_id="assignment".id
   WHERE "journal".user_id=$1
   ORDER BY "journal".id DESC;`;
@@ -29,16 +31,18 @@ router.get('/get-all-journals', (req, res) => {
 /**
  * GET route handles getting the pair of tasks for 'journal details' page
  */
-router.get('/get-task/:id', rejectUnauthenticated, (req, res) => {
+router.get('/get-task/:id/:date', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "journal"
   JOIN "task" ON "task".id="journal".task_id
   JOIN "assignment" ON "task".assignment_id="assignment".id
-  WHERE "journal".user_id=$1 AND "assignment".id=$2;`;
+  WHERE "journal".user_id=$1 AND "assignment".id=$2 AND "journal".date<$3 AND "journal".date>$4;`;
 
+  const lowDate = DateTime.fromISO(req.params.date).minus(1000 * 30);
+  const highDate = DateTime.fromISO(req.params.date).plus(1000 * 30);
   const studentId = req.user.id;
 
   pool
-    .query(queryText, [studentId, req.params.id])
+    .query(queryText, [studentId, req.params.id, highDate, lowDate])
     .then((dbResponse) => {
       res.send(dbResponse.rows);
     })
@@ -54,7 +58,7 @@ router.get('/get-task/:id', rejectUnauthenticated, (req, res) => {
 router.get('/get-note/:id', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "journal"
   JOIN "assignment" ON "journal".assignment_id="assignment".id
-  WHERE "journal".user_id=$1 AND "assignment".id=$2;`;
+  WHERE "journal".user_id=$1 AND "journal".id=$2;`;
 
   const studentId = req.user.id;
 

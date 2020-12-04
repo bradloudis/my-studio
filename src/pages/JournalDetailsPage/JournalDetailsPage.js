@@ -13,16 +13,13 @@ class JournalDetailsPage extends Component {
     // this is the id to send in dispatch to get the details for the individual student!
     // console.log(this.props.match.params.id);
 
-    // gets the student note for journal item
+    // gets the student note and tasks for journal item
     this.props.dispatch({
       type: 'GET_JOURNAL_NOTE_DETAILS',
-      payload: this.props.match.params.id,
-    });
-
-    // gets the tasks for journal item
-    this.props.dispatch({
-      type: 'GET_JOURNAL_TASK_ITEMS',
-      payload: this.props.match.params.id,
+      payload: {
+        journalId: this.props.match.params.id,
+        assignmentId: this.props.match.params.assignmentId,
+      },
     });
   }
 

@@ -13,7 +13,9 @@ class JournalTableItem extends Component {
   journalItemClick = () => {
     console.log('journal item click', this.props.journalItem.id);
     // push student to Journal Item Detail page
-    this.props.history.push(`/journal-details/${this.props.journalItem.id}`);
+    this.props.history.push(
+      `/journal-details/${this.props.journalItem.id}/${this.props.journalItem.assignment_id}`
+    );
   };
 
   handleDeleteClick = () => {
