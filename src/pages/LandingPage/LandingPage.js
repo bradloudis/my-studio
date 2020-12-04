@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+// SWEET ALERT
+import Swal from 'sweetalert2';
 // MATERIAL UI
 import { Button } from '@material-ui/core';
 
@@ -20,7 +22,19 @@ class LandingPage extends Component {
   };
 
   onRegister = () => {
-    this.props.history.push('/registration');
+    Swal.fire({
+      title: 'Are you a teacher?',
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonTex: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('you are a teacher');
+      } else if (result.isDenied) {
+        console.log('you are a student');
+      }
+    });
+    // this.props.history.push('/registration');
   };
 
   render() {
