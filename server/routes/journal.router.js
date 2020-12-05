@@ -32,7 +32,7 @@ router.get('/get-all-journals', (req, res) => {
  * GET route handles getting the pair of tasks for 'journal details' page
  */
 router.get('/get-task/:id/:date', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "journal"
+  const queryText = `SELECT *, "journal".id FROM "journal"
   JOIN "task" ON "task".id="journal".task_id
   JOIN "assignment" ON "task".assignment_id="assignment".id
   WHERE "journal".user_id=$1 AND "assignment".id=$2 AND "journal".date<$3 AND "journal".date>$4;`;
