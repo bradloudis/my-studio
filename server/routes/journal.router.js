@@ -119,4 +119,11 @@ router.post('/post-note', rejectUnauthenticated, (req, res) => {
     });
 });
 
+/**
+ *  DELETE removes 3 items from "journal" table (note, task, task)
+ **/
+router.delete('/delete-journal-item', rejectUnauthenticated, (req, res) => {
+  const queryText = `DELETE FROM "journal" WHERE id=$1;`;
+});
+
 module.exports = router;
