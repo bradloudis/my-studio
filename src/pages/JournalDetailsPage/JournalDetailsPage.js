@@ -30,7 +30,9 @@ class JournalDetailsPage extends Component {
   };
 
   handleDeleteClick = () => {
-    console.log(this.props.journalItem.id);
+    console.log(this.props.match.params.id);
+    console.log(this.props.store.journal.journalTaskItems[0].id);
+    console.log(this.props.store.journal.journalTaskItems[1].id);
   };
 
   render() {
