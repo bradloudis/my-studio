@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './StudentListItem.css';
 import { withRouter } from 'react-router-dom';
 
 // MATERIAL-UI
@@ -25,13 +24,13 @@ class StudentListItem extends Component {
                   `${this.props.student.profile_picture}`
                 }
                 alt="not found"
-                className="blankProfileImg"
+                className="profilePicture"
               />
             ) : (
               <img
                 src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
                 alt="not found"
-                className="blankProfileImg"
+                className="profilePicture"
               />
             )}
 

@@ -12,6 +12,11 @@ body {
   background-size: relative;
 }
 
+/* profile pictures */
+.profilePicture {
+  height: 200px;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
