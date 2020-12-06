@@ -47,7 +47,13 @@ class StudentDetailsPage extends Component {
         <Grid container>
           <Grid item xs={4}>
             {studentToDisplay.profile_picture ? (
-              <p>PROFILE PICTURE</p>
+              <img
+                src={
+                  process.env.PUBLIC_URL + `${studentToDisplay.profile_picture}`
+                }
+                alt="not found"
+                className="blankProfileImg"
+              />
             ) : (
               <img
                 src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
