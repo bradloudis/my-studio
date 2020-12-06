@@ -112,6 +112,7 @@ Form Treatment
   background-color: #efefef;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+  opacity: 0.8;
 }
 
 input {
