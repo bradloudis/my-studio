@@ -27,7 +27,6 @@ class JournalTable extends Component {
   }
 
   addJournalClick = () => {
-    console.log('add journal click');
     this.props.history.push('/add-journal');
   };
 

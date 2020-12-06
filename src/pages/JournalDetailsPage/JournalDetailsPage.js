@@ -39,7 +39,7 @@ class JournalDetailsPage extends Component {
       type: 'DELETE_JOURNAL_ITEM',
       payload: idArray,
     });
-    // this.props.history.push('/journal');
+    this.props.history.push('/journal');
   };
 
   render() {
