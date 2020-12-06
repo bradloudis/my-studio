@@ -40,6 +40,7 @@ class JournalDetailsPage extends Component {
       payload: idArray,
     });
     console.log(idArray);
+    this.props.history.push('/journal');
   };
 
   render() {
