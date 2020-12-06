@@ -76,11 +76,24 @@ function* saveJournal(action) {
   }
 }
 
+function* deleteJournalEntry(action) {
+  try {
+    // axios DELETE --> need to send payload in 'data object' !!
+    // axios.delete(url, { data: { foo: "bar" }, headers: { "Authorization": "***" } });
+    yield axios.delete('/api/journal/delete-journal-item', {
+      data: action.payload,
+    });
+  } catch (error) {
+    console.log('could not delete journal entry', error);
+  }
+}
+
 function* journalSaga() {
   yield takeLatest('GET_ALL_JOURNALS', getAllJournals);
   yield takeLatest('GET_JOURNAL_NOTE_DETAILS', journalNoteDetails);
   yield takeLatest('GET_JOURNAL_TASK_ITEMS', journalTaskItems);
   yield takeLatest('SUBMIT_JOURNAL_ENTRY', saveJournal);
+  yield takeLatest('DELETE_JOURNAL_ITEM', deleteJournalEntry);
 }
 
 export default journalSaga;
