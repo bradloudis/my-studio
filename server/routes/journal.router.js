@@ -123,7 +123,25 @@ router.post('/post-note', rejectUnauthenticated, (req, res) => {
  *  DELETE removes 3 items from "journal" table (note, task, task)
  **/
 router.delete('/delete-journal-item', rejectUnauthenticated, (req, res) => {
-  const queryText = `DELETE FROM "journal" WHERE id=$1;`;
+  try {
+    // 3 item ids from journal entry
+    const idArray = req.body.idArray;
+    // empty array that the 3 pool.query can be pushed into
+    const arrayForPromise = [];
+
+    for (let i = 0; i < idArray.length; i++) {
+      const queryText = `DELETE FROM "journal" WHERE id=$1;`;
+      const queryArray = [idArray[i]];
+      arrayForPromise.push(pool.query(queryText, queryArray));
+    }
+
+    Promise.all(arrayForPromise).then(() => {
+      res.sendStatus(200);
+    });
+  } catch (error) {
+    console.log('could not delete!', error);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
