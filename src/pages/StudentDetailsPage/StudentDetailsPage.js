@@ -80,7 +80,7 @@ class StudentDetailsPage extends Component {
             </Button>
           </Grid>
           <Grid item xs={8}>
-            <h2>Next Lesson:</h2>
+            {/* <h2>Next Lesson:</h2> */}
             <Grid container>
               <Grid item xs={6}>
                 <CurrentAssignment />
