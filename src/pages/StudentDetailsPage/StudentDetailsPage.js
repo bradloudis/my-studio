@@ -9,6 +9,7 @@ import { Container, Grid, Button } from '@material-ui/core';
 // CUSTOM COMPONENTS
 import TeacherNote from '../../components/TeacherNote/TeacherNote';
 import CurrentAssignment from '../../components/CurrentAssignment/CurrentAssignment';
+import JournalTable from '../../components/JournalTable/JournalTable';
 
 class StudentDetailsPage extends Component {
   componentDidMount() {
@@ -96,6 +97,7 @@ class StudentDetailsPage extends Component {
             </Grid>
           </Grid>
         </Grid>
+        <JournalTable />
       </Container>
     );
   }

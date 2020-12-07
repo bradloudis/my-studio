@@ -35,9 +35,11 @@ class JournalTable extends Component {
       <Container>
         <h1>Journal Page</h1>
         <Box mb={2}>
-          <Button variant="contained" onClick={this.addJournalClick}>
-            ADD PRACTICE JOURNAL
-          </Button>
+          {this.props.store.user.access_level === 2 && (
+            <Button variant="contained" onClick={this.addJournalClick}>
+              ADD PRACTICE JOURNAL
+            </Button>
+          )}
         </Box>
         {this.props.store.journal.allJournalsReducer.length != 0 ? (
           <TableContainer className="formPanel">

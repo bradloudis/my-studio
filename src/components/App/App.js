@@ -15,7 +15,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 // PAGES
 // -----------------
-import AboutPage from '../../pages/AboutPage/AboutPage';
+// import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage';
 import InfoPage from '../../pages/InfoPage/InfoPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';

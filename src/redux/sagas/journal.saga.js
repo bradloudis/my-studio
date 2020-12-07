@@ -20,7 +20,6 @@ function* getJournalsTeacher(action) {
     const allJournals = yield axios.get(
       `/api/journal/teacher-get-all-journals/${action.payload}`
     );
-    console.log(allJournals.data);
     yield put({
       type: 'SET_ALL_JOURNALS',
       payload: allJournals.data,
