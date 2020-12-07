@@ -46,8 +46,12 @@ class JournalTable extends Component {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Date</TableCell>
-                  <TableCell align="center">Entry</TableCell>
+                  <TableCell align="center">
+                    <strong>Date</strong>
+                  </TableCell>
+                  <TableCell align="center">
+                    <strong>Entry</strong>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
