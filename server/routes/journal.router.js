@@ -36,7 +36,6 @@ router.get('/teacher-get-all-journals/:id', (req, res) => {
   JOIN "assignment" ON "journal".assignment_id="assignment".id
   WHERE "journal".user_id=$1
   ORDER BY "journal".id DESC;`;
-  console.log(req.params.id);
   pool
     .query(queryText, [req.params.id])
     .then((dbResponse) => {
