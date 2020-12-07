@@ -6,7 +6,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import CurrentAssignment from '../CurrentAssignment/CurrentAssignment';
 
 // MATERIAL UI
-import { Button, Grid, Container } from '@material-ui/core';
+import { Button, Grid, Container, Box } from '@material-ui/core';
 
 class StudentHomePage extends Component {
   componentDidMount() {
@@ -22,38 +22,42 @@ class StudentHomePage extends Component {
   render() {
     return (
       <Container>
-        <h1>STUDENT</h1>
-        <Grid container spacing={2} alignItems="flex-start">
-          <Grid item xs={4}>
-            {this.props.store.user.profile_picture ? (
-              <img
-                src={
-                  process.env.PUBLIC_URL +
-                  `${this.props.store.user.profile_picture}`
-                }
-                alt="not found"
-                className="profilePicture"
-              />
-            ) : (
-              <img
-                src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
-                alt="not found"
-                className="blankProfileImg"
-              />
-            )}
+        <Grid container justify="space-evenly" alignItems="center">
+          <Grid item xs={6}>
+            <Box>
+              <h1>STUDENT</h1>
+              <h2>
+                {this.props.store.user.first_name}{' '}
+                {this.props.store.user.last_name}
+              </h2>
+              <h3>{this.props.store.user.instrument}</h3>
+            </Box>
+            <Box>
+              {this.props.store.user.profile_picture ? (
+                <img
+                  src={
+                    process.env.PUBLIC_URL +
+                    `${this.props.store.user.profile_picture}`
+                  }
+                  alt="not found"
+                  className="profilePicture"
+                />
+              ) : (
+                <img
+                  src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
+                  alt="not found"
+                  className="blankProfileImg"
+                />
+              )}
+            </Box>
+            <Button variant="contained" onClick={this.handleEditClick}>
+              EDIT
+            </Button>
           </Grid>
-          <Grid item xs={8}>
-            <h2>
-              {this.props.store.user.first_name}{' '}
-              {this.props.store.user.last_name}
-            </h2>
-            <h3>{this.props.store.user.instrument}</h3>
+          <Grid item xs={6}>
+            <CurrentAssignment />
           </Grid>
         </Grid>
-        <Button variant="contained" onClick={this.handleEditClick}>
-          EDIT
-        </Button>
-        <CurrentAssignment />
       </Container>
     );
   }
