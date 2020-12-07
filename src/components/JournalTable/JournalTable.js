@@ -35,7 +35,7 @@ class JournalTable extends Component {
       <Container>
         <h1>Journal Page</h1>
         <Box mb={2}>
-          {this.props.store.user.access_level === 2 && (
+          {this.props.store.user.access_level_id === 2 && (
             <Button variant="contained" onClick={this.addJournalClick}>
               ADD PRACTICE JOURNAL
             </Button>
