@@ -45,9 +45,10 @@ const Nav = (props) => {
           </>
         )}
         {/* Always show this link since the about page is not protected */}
-        <Link className="nav-link" to="/about">
+        {/*commented out for now. may add an about page later*/}
+        {/* <Link className="nav-link" to="/about">
           About
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
