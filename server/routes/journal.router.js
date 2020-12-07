@@ -32,7 +32,7 @@ router.get('/get-all-journals', (req, res) => {
  * GET route handles getting the pair of tasks for 'journal details' page
  */
 router.get('/get-task/:id/:date', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "journal"
+  const queryText = `SELECT *, "journal".id FROM "journal"
   JOIN "task" ON "task".id="journal".task_id
   JOIN "assignment" ON "task".assignment_id="assignment".id
   WHERE "journal".user_id=$1 AND "assignment".id=$2 AND "journal".date<$3 AND "journal".date>$4;`;
@@ -117,6 +117,31 @@ router.post('/post-note', rejectUnauthenticated, (req, res) => {
       console.log('problem saving journal note to DB', err);
       res.sendStatus(500);
     });
+});
+
+/**
+ *  DELETE removes 3 items from "journal" table (note, task, task)
+ **/
+router.delete('/delete-journal-item', rejectUnauthenticated, (req, res) => {
+  try {
+    // 3 item ids from journal entry
+    const idArray = req.body.idArray;
+    // empty array that the 3 pool.query can be pushed into
+    const arrayForPromise = [];
+
+    for (let i = 0; i < idArray.length; i++) {
+      const queryText = `DELETE FROM "journal" WHERE id=$1;`;
+      const queryArray = [idArray[i]];
+      arrayForPromise.push(pool.query(queryText, queryArray));
+    }
+
+    Promise.all(arrayForPromise).then(() => {
+      res.sendStatus(200);
+    });
+  } catch (error) {
+    console.log('could not delete!', error);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
