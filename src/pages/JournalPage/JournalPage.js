@@ -6,6 +6,11 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import JournalTable from '../../components/JournalTable/JournalTable';
 
 class JournalPage extends Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'GET_ALL_JOURNALS',
+    });
+  }
   render() {
     return (
       <div>

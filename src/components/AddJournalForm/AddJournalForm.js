@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom';
 
+// SWEET ALERT
+import Swal from 'sweetalert2';
 // MATERIAL UI
 import {
   Button,
@@ -43,6 +45,10 @@ class AddJournalForm extends Component {
         taskItemTwoId: this.props.assignment[1].id,
         assignmentId: this.props.assignment[0].assignment_id,
       },
+    });
+    Swal.fire({
+      title: 'Nice!',
+      text: `Way to go ${this.props.store.user.first_name}!`,
     });
     this.props.history.push('/journal');
   };
