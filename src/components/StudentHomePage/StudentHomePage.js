@@ -26,7 +26,14 @@ class StudentHomePage extends Component {
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={4}>
             {this.props.store.user.profile_picture ? (
-              <p>PROFILE PICTURE</p>
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  `${this.props.store.user.profile_picture}`
+                }
+                alt="not found"
+                className="profilePicture"
+              />
             ) : (
               <img
                 src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
