@@ -28,6 +28,11 @@ class StudentDetailsPage extends Component {
       type: 'GET_ASSIGNMENT_TEACHER',
       payload: this.props.match.params.id,
     });
+
+    this.props.dispatch({
+      type: 'GET_JOURNALS_TEACHER',
+      payload: this.props.match.params.id,
+    });
   }
 
   addNewAssignmentClick = () => {

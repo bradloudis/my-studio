@@ -14,6 +14,22 @@ function* getAllJournals() {
   }
 }
 
+// gets all journals for teacher page
+function* getJournalsTeacher(action) {
+  try {
+    const allJournals = yield axios.get(
+      `/api/journal/teacher-get-all-journals/${action.payload}`
+    );
+    console.log(allJournals.data);
+    yield put({
+      type: 'SET_ALL_JOURNALS',
+      payload: allJournals.data,
+    });
+  } catch (error) {
+    console.log('could not get the journal log for this student', error);
+  }
+}
+
 // gets details for specific journal item from DB
 function* journalNoteDetails(action) {
   try {
@@ -94,6 +110,7 @@ function* journalSaga() {
   yield takeLatest('GET_JOURNAL_TASK_ITEMS', journalTaskItems);
   yield takeLatest('SUBMIT_JOURNAL_ENTRY', saveJournal);
   yield takeLatest('DELETE_JOURNAL_ITEM', deleteJournalEntry);
+  yield takeLatest('GET_JOURNALS_TEACHER', getJournalsTeacher);
 }
 
 export default journalSaga;

@@ -8,7 +8,7 @@ const {
 const { DateTime } = require('luxon');
 
 /**
- * GET route handles getting ALL journals for a specific student
+ * GET route handles getting ALL journals for a specific student STUDENT PAGE
  */
 router.get('/get-all-journals', (req, res) => {
   const queryText = `SELECT *, "journal".id, "assignment".id as assignmentId FROM "journal"
@@ -18,6 +18,27 @@ router.get('/get-all-journals', (req, res) => {
 
   pool
     .query(queryText, [req.user.id])
+    .then((dbResponse) => {
+      // console.log(dbResponse.rows);
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('could not get all journals', err);
+      res.sendStatus(500);
+    });
+});
+
+/**
+ * GET route handles getting ALL journals for a specific student TEACHER PAGE
+ */
+router.get('/teacher-get-all-journals/:id', (req, res) => {
+  const queryText = `SELECT *, "journal".id, "assignment".id as assignmentId FROM "journal"
+  JOIN "assignment" ON "journal".assignment_id="assignment".id
+  WHERE "journal".user_id=$1
+  ORDER BY "journal".id DESC;`;
+  console.log(req.params.id);
+  pool
+    .query(queryText, [req.params.id])
     .then((dbResponse) => {
       // console.log(dbResponse.rows);
       res.send(dbResponse.rows);
