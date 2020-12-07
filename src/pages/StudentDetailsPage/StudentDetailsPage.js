@@ -9,6 +9,7 @@ import { Container, Grid, Button } from '@material-ui/core';
 // CUSTOM COMPONENTS
 import TeacherNote from '../../components/TeacherNote/TeacherNote';
 import CurrentAssignment from '../../components/CurrentAssignment/CurrentAssignment';
+import JournalTable from '../../components/JournalTable/JournalTable';
 
 class StudentDetailsPage extends Component {
   componentDidMount() {
@@ -26,6 +27,11 @@ class StudentDetailsPage extends Component {
 
     this.props.dispatch({
       type: 'GET_ASSIGNMENT_TEACHER',
+      payload: this.props.match.params.id,
+    });
+
+    this.props.dispatch({
+      type: 'GET_JOURNALS_TEACHER',
       payload: this.props.match.params.id,
     });
   }
@@ -47,12 +53,18 @@ class StudentDetailsPage extends Component {
         <Grid container>
           <Grid item xs={4}>
             {studentToDisplay.profile_picture ? (
-              <p>PROFILE PICTURE</p>
+              <img
+                src={
+                  process.env.PUBLIC_URL + `${studentToDisplay.profile_picture}`
+                }
+                alt="not found"
+                className="profilePicture"
+              />
             ) : (
               <img
                 src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
                 alt="not found"
-                className="blankProfileImg"
+                className="profilePicture"
               />
             )}
             <p>
@@ -68,7 +80,7 @@ class StudentDetailsPage extends Component {
             </Button>
           </Grid>
           <Grid item xs={8}>
-            <h2>Next Lesson:</h2>
+            {/* <h2>Next Lesson:</h2> */}
             <Grid container>
               <Grid item xs={6}>
                 <CurrentAssignment />
@@ -85,6 +97,7 @@ class StudentDetailsPage extends Component {
             </Grid>
           </Grid>
         </Grid>
+        <JournalTable />
       </Container>
     );
   }

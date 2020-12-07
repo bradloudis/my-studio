@@ -17,10 +17,10 @@ class StudentList extends Component {
 
   render() {
     return (
-      <Grid container spacing={4}>
+      <Grid container spacing={6} justify="flex-start">
         {this.props.store.student.studentListReducer.map((item, index) => {
           return (
-            <Grid item key={index}>
+            <Grid item key={index} xs={4}>
               <StudentListItem student={item} />
             </Grid>
           );

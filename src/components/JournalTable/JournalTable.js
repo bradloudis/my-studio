@@ -27,7 +27,6 @@ class JournalTable extends Component {
   }
 
   addJournalClick = () => {
-    console.log('add journal click');
     this.props.history.push('/add-journal');
   };
 
@@ -36,17 +35,23 @@ class JournalTable extends Component {
       <Container>
         <h1>Journal Page</h1>
         <Box mb={2}>
-          <Button variant="contained" onClick={this.addJournalClick}>
-            ADD PRACTICE JOURNAL
-          </Button>
+          {this.props.store.user.access_level_id === 2 && (
+            <Button variant="contained" onClick={this.addJournalClick}>
+              ADD PRACTICE JOURNAL
+            </Button>
+          )}
         </Box>
         {this.props.store.journal.allJournalsReducer.length != 0 ? (
           <TableContainer className="formPanel">
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Date</TableCell>
-                  <TableCell align="center">Entry</TableCell>
+                  <TableCell align="center">
+                    <strong>Date</strong>
+                  </TableCell>
+                  <TableCell align="center">
+                    <strong>Entry</strong>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

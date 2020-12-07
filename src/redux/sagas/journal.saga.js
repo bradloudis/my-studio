@@ -14,6 +14,21 @@ function* getAllJournals() {
   }
 }
 
+// gets all journals for teacher page
+function* getJournalsTeacher(action) {
+  try {
+    const allJournals = yield axios.get(
+      `/api/journal/teacher-get-all-journals/${action.payload}`
+    );
+    yield put({
+      type: 'SET_ALL_JOURNALS',
+      payload: allJournals.data,
+    });
+  } catch (error) {
+    console.log('could not get the journal log for this student', error);
+  }
+}
+
 // gets details for specific journal item from DB
 function* journalNoteDetails(action) {
   try {
@@ -76,11 +91,25 @@ function* saveJournal(action) {
   }
 }
 
+function* deleteJournalEntry(action) {
+  try {
+    // axios DELETE --> need to send payload in 'data object' !!
+    // axios.delete(url, { data: { foo: "bar" }, headers: { "Authorization": "***" } });
+    yield axios.delete('/api/journal/delete-journal-item', {
+      data: action.payload,
+    });
+  } catch (error) {
+    console.log('could not delete journal entry', error);
+  }
+}
+
 function* journalSaga() {
   yield takeLatest('GET_ALL_JOURNALS', getAllJournals);
   yield takeLatest('GET_JOURNAL_NOTE_DETAILS', journalNoteDetails);
   yield takeLatest('GET_JOURNAL_TASK_ITEMS', journalTaskItems);
   yield takeLatest('SUBMIT_JOURNAL_ENTRY', saveJournal);
+  yield takeLatest('DELETE_JOURNAL_ITEM', deleteJournalEntry);
+  yield takeLatest('GET_JOURNALS_TEACHER', getJournalsTeacher);
 }
 
 export default journalSaga;

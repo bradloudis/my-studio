@@ -15,7 +15,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 // PAGES
 // -----------------
-import AboutPage from '../../pages/AboutPage/AboutPage';
+// import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage';
 import InfoPage from '../../pages/InfoPage/InfoPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';
@@ -46,12 +46,13 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
-            <Route
+            {/*commented out for now. may add an about page later*/}
+            {/* <Route
               // shows AboutPage at all times (logged in or not)
               exact
               path="/about"
               component={AboutPage}
-            />
+            /> */}
 
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.

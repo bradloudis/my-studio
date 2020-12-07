@@ -10,6 +10,12 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-size: relative;
+  background-attachment: fixed;
+}
+
+/* profile pictures */
+.profilePicture {
+  height: 225px;
 }
 
 body {
@@ -112,6 +118,7 @@ Form Treatment
   background-color: #efefef;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+  opacity: 0.8;
 }
 
 input {
