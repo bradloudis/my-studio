@@ -61,6 +61,9 @@ class JournalDetailsPage extends Component {
                       return (
                         <div key={index}>
                           <p>
+                            <strong>Task</strong>
+                          </p>
+                          <p>
                             {item.task_item}
                             <span>
                               {item.complete_status ? (
@@ -74,6 +77,9 @@ class JournalDetailsPage extends Component {
                       );
                     }
                   )}
+                  <p>
+                    <strong>Notes</strong>
+                  </p>
                   <p>{this.props.store.journal.journalItemNoteDetails.notes}</p>
                 </Grid>
               </Grid>
