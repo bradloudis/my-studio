@@ -47,7 +47,7 @@ class JournalDetailsPage extends Component {
       <Container>
         <Grid container justify="space-evenly">
           <Grid item>
-            <h1>JournalDetailsPage</h1>
+            <h1>Journal Entry</h1>
             <Box mb={2}>
               <Button variant="contained" onClick={this.handleBackClick}>
                 BACK
