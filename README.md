@@ -8,6 +8,14 @@ My Studio is a web application that aims to help simplify studio management for 
 
 A teacher user
 
+## Screenshots
+
+![student list](student-list.png)
+![student detail](student-detail.png)
+![all journals](all-journals.png)
+![add journal](add-journal.png)
+![journal detail](journal-detail.png)
+
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
@@ -18,17 +26,72 @@ Before you get started, make sure you have the following software installed on y
 
 ## Create database and table
 
-Create a new database called `prime_app` and create a `user` table:
+Create a new database called `my_studio` and run the following queries:
 
 ```SQL
+CREATE TABLE "access_level" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR (20),
+	"level" integer
+);
+
+INSERT INTO "access_level" (name, level)
+VALUES ('teacher', 1),
+('student', 0);
+
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
+    "username" VARCHAR (80) UNIQUE,
+    "password" VARCHAR (1000),
+    "first_name" VARCHAR (80) NOT NULL,
+    "last_name" VARCHAR (80) NOT NULL,
+    "email" VARCHAR (80) NOT NULL,
+    "phone_number" VARCHAR (20),
+    "instrument" VARCHAR (40),
+    "access_level_id" INTEGER,
+    "temporary_key" VARCHAR (40),
+    "profile_picture" VARCHAR (100),
+    "registration_status" VARCHAR (20) NOT NULL
+);
+
+CREATE TABLE "teacher_student" (
+	"id" SERIAL PRIMARY KEY,
+	"teacher_id" INT REFERENCES "user",
+	"student_id" INT REFERENCES "user"
+);
+
+CREATE TABLE "teacher_notes" (
+	"id" SERIAL PRIMARY KEY,
+	"teacher_id" INT REFERENCES "user",
+	"student_id" INT REFERENCES "user",
+	"note" VARCHAR (1000)
+);
+
+CREATE TABLE "assignment" (
+	"id" SERIAL PRIMARY KEY,
+	"teacher_id" INT REFERENCES "user",
+	"student_id" INT REFERENCES "user",
+	"teacher_notes" VARCHAR (1000)
+);
+
+CREATE TABLE "task" (
+	"id" SERIAL PRIMARY KEY,
+	"assignment_id" INT REFERENCES "assignment",
+	"task_item" VARCHAR (1000)
+);
+
+CREATE TABLE "journal" (
+	"id" SERIAL PRIMARY KEY,
+	"task_id" INT REFERENCES "task",
+	"complete_status" BOOLEAN,
+	"notes" VARCHAR (1000),
+	"date" TIMESTAMP,
+	"user_id" INT REFERENCES "user",
+	"assignment_id" INT REFERENCES "assignment"
 );
 ```
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+If you would like to name your database something else, you will need to change `my_studio` to the name of your new database name in `server/modules/pool.js`
 
 ## Development Setup Instructions
 
@@ -118,11 +181,3 @@ This code is also heavily commented. We recommend reading through the comments, 
 ## Update Documentation
 
 Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
-
-## Screenshots
-
-![student list](student-list.png)
-![student detail](student-detail.png)
-![all journals](all-journals.png)
-![add journal](add-journal.png)
-![journal detail](journal-detail.png)
