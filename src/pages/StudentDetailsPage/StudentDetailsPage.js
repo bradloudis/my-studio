@@ -52,10 +52,11 @@ class StudentDetailsPage extends Component {
         <h1>STUDENT DETAILS</h1>
         <Grid container>
           <Grid item xs={4}>
-            {studentToDisplay.profile_picture ? (
+            {studentToDisplay.profile_picture_path ? (
               <img
                 src={
-                  process.env.PUBLIC_URL + `${studentToDisplay.profile_picture}`
+                  process.env.PUBLIC_URL +
+                  `${studentToDisplay.profile_picture_path}`
                 }
                 alt="not found"
                 className="profilePicture"

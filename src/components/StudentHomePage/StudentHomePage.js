@@ -33,11 +33,11 @@ class StudentHomePage extends Component {
               <h3>{this.props.store.user.instrument}</h3>
             </Box>
             <Box>
-              {this.props.store.user.profile_picture ? (
+              {this.props.store.user.profile_picture_path ? (
                 <img
                   src={
                     process.env.PUBLIC_URL +
-                    `${this.props.store.user.profile_picture}`
+                    `${this.props.store.user.profile_picture_path}`
                   }
                   alt="not found"
                   className="profilePicture"

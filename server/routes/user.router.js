@@ -22,7 +22,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles GET student list for TEACHER
 router.get('/get-students', rejectUnauthenticated, (req, res) => {
   const teacherId = req.user.id;
-  const queryText = `SELECT "student_id", "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user"
+  const queryText = `SELECT "student_id", "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture_path" FROM "user"
   JOIN "teacher_student" ON "user".id = "teacher_student".student_id
   WHERE "teacher_student".teacher_id = $1 AND "user".registration_status = 'done';`;
 
@@ -40,7 +40,7 @@ router.get('/get-students', rejectUnauthenticated, (req, res) => {
 // Handles GET student details for Student Details Page
 router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
   const queryText =
-    'SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user" WHERE id=$1';
+    'SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture_path" FROM "user" WHERE id=$1';
 
   pool
     .query(queryText, [req.params.id])
