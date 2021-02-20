@@ -54,8 +54,6 @@ router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // Handles POST request with new user data for TEACHER
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
 router.post('/register/teacher', (req, res, next) => {
   const { username, firstName, lastName, email, phone } = req.body;
   const password = encryptLib.encryptPassword(req.body.password);
@@ -85,8 +83,6 @@ router.post('/register/teacher', (req, res, next) => {
 });
 
 // Handles POST request with new user data for STUDENT (added by TEACHER)
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
 router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
   const queryForTeacherAccessLevel = `SELECT * FROM "user"
   JOIN "access_level" ON "user".access_level_id = "access_level".id
@@ -241,6 +237,24 @@ router.put('/register/student/:tempKey', (req, res) => {
       console.log(err);
       // if no match send error 403 FORBIDDEN
       res.sendStatus(403);
+    });
+});
+
+// Handles student update profile picture
+router.put('/update-profile-pic', (req, res) => {
+  const studentId = req.user.id;
+  const profilePath = req.body.profilePath;
+
+  const queryForProfilePic = `UPDATE "user" SET "profile_picture_path"=$1 WHERE "user".id=$2;`;
+
+  pool
+    .query(queryForProfilePic, [profilePath, studentId])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('could not update profile pic!', err);
+      res.sendStatus(500);
     });
 });
 
