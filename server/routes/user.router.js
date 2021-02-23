@@ -243,19 +243,20 @@ router.put('/register/student/:tempKey', (req, res) => {
 // Handles student update profile picture
 router.put('/update-profile-pic', (req, res) => {
   const studentId = req.user.id;
-  const profilePath = req.body.profilePath;
+  const profilePath = req.body;
+  console.log(profilePath);
 
   const queryForProfilePic = `UPDATE "user" SET "profile_picture_path"=$1 WHERE "user".id=$2;`;
 
-  pool
-    .query(queryForProfilePic, [profilePath, studentId])
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      console.log('could not update profile pic!', err);
-      res.sendStatus(500);
-    });
+  // pool
+  //   .query(queryForProfilePic, [profilePath, studentId])
+  //   .then(() => {
+  //     res.sendStatus(200);
+  //   })
+  //   .catch((err) => {
+  //     console.log('could not update profile pic!', err);
+  //     res.sendStatus(500);
+  //   });
 });
 
 // Handles login form authenticate/login POST
