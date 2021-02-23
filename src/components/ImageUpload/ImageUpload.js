@@ -10,7 +10,10 @@ class ImageUpload extends Component {
     // console.log('Access it on s3 at', info.fileUrl);
 
     // sending fileUrl (string) to be saved in User table
-    this.props.dispatch({ type: 'SET_IMAGE_URL', payload: info.fileUrl });
+    this.props.dispatch({
+      type: 'SET_IMAGE_URL',
+      payload: { link: info.fileUrl },
+    });
   };
 
   render() {
