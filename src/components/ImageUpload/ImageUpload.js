@@ -4,6 +4,20 @@ import { connect } from 'react-redux';
 // import s3 image uploader
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
+const dropStyles = {
+  width: '50px',
+  height: '20px',
+  display: 'flex',
+  'justify-content': 'center',
+  'align-items': 'center',
+};
+
+const innerDropElement = (
+  <div className="img-upload-text">
+    <p>Edit</p>
+  </div>
+);
+
 class ImageUpload extends Component {
   handleFinishedUpload = (info) => {
     // console.log('File upload with filename', info.filename);
@@ -30,6 +44,8 @@ class ImageUpload extends Component {
         s3Url={s3Url}
         maxSize={1024 * 1024 * 5}
         upload={uploadOptions}
+        children={innerDropElement}
+        style={dropStyles}
       />
     );
   }

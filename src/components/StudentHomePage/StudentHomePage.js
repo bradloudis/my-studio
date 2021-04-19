@@ -14,12 +14,6 @@ class StudentHomePage extends Component {
     this.props.dispatch({ type: 'GET_ASSIGNMENT_STUDENT' });
   }
 
-  handleEditClick = () => {
-    console.log('edit btn click');
-    console.log(new Date());
-    // TODO AWS S3 upload profile picture
-  };
-
   render() {
     return (
       <Container>
@@ -51,7 +45,7 @@ class StudentHomePage extends Component {
                 />
               )}
             </Box>
-            <Button variant="contained" onClick={this.handleEditClick}>
+            <Button variant="contained">
               <ImageUpload />
             </Button>
           </Grid>
