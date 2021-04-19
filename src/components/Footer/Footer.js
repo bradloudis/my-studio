@@ -7,11 +7,6 @@ import ImageUpload from '../ImageUpload/ImageUpload';
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
 
-const Footer = () => (
-  <footer>
-    <ImageUpload />
-    &copy; Brad Loudis
-  </footer>
-);
+const Footer = () => <footer>&copy; Brad Loudis</footer>;
 
 export default Footer;

@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // CUSTOM COMPONENTS
 import CurrentAssignment from '../CurrentAssignment/CurrentAssignment';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 // MATERIAL UI
 import { Button, Grid, Container, Box } from '@material-ui/core';
@@ -51,7 +52,7 @@ class StudentHomePage extends Component {
               )}
             </Box>
             <Button variant="contained" onClick={this.handleEditClick}>
-              EDIT
+              <ImageUpload />
             </Button>
           </Grid>
           <Grid item xs={6}>
