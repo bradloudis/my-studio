@@ -46,7 +46,7 @@ class StudentHomePage extends Component {
                 <img
                   src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
                   alt="not found"
-                  className="blankProfileImg"
+                  className="profilePicture"
                 />
               )}
             </Box>
