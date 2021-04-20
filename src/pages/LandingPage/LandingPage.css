@@ -10,7 +10,7 @@ Grid
   flex-wrap: wrap;
   /* defaults to 'flex-start' */
   justify-content: flex-start;
-  align-items: flex-start;
+  /* align-items: flex-start; */
 }
 
 .grid-col {
