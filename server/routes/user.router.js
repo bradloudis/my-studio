@@ -22,7 +22,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles GET student list for TEACHER
 router.get('/get-students', rejectUnauthenticated, (req, res) => {
   const teacherId = req.user.id;
-  const queryText = `SELECT "student_id", "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user"
+  const queryText = `SELECT "student_id", "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture_path" FROM "user"
   JOIN "teacher_student" ON "user".id = "teacher_student".student_id
   WHERE "teacher_student".teacher_id = $1 AND "user".registration_status = 'done';`;
 
@@ -40,7 +40,7 @@ router.get('/get-students', rejectUnauthenticated, (req, res) => {
 // Handles GET student details for Student Details Page
 router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
   const queryText =
-    'SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture" FROM "user" WHERE id=$1';
+    'SELECT "first_name", "last_name", "email", "phone_number", "instrument", "profile_picture_path" FROM "user" WHERE id=$1';
 
   pool
     .query(queryText, [req.params.id])
@@ -54,8 +54,6 @@ router.get('/student-details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // Handles POST request with new user data for TEACHER
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
 router.post('/register/teacher', (req, res, next) => {
   const { username, firstName, lastName, email, phone } = req.body;
   const password = encryptLib.encryptPassword(req.body.password);
@@ -85,8 +83,6 @@ router.post('/register/teacher', (req, res, next) => {
 });
 
 // Handles POST request with new user data for STUDENT (added by TEACHER)
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
 router.post('/register/student', rejectUnauthenticated, (req, res, next) => {
   const queryForTeacherAccessLevel = `SELECT * FROM "user"
   JOIN "access_level" ON "user".access_level_id = "access_level".id
@@ -241,6 +237,24 @@ router.put('/register/student/:tempKey', (req, res) => {
       console.log(err);
       // if no match send error 403 FORBIDDEN
       res.sendStatus(403);
+    });
+});
+
+// Handles student update profile picture
+router.put('/update-profile-pic', (req, res) => {
+  const studentId = req.user.id;
+  const profilePath = req.body.link;
+
+  const queryForProfilePic = `UPDATE "user" SET "profile_picture_path"=$1 WHERE "user".id=$2;`;
+
+  pool
+    .query(queryForProfilePic, [profilePath, studentId])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('could not update profile pic!', err);
+      res.sendStatus(500);
     });
 });
 

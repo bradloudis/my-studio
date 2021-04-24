@@ -20,7 +20,7 @@ CREATE TABLE "user" (
     "instrument" VARCHAR (40),
     "access_level_id" INTEGER,
     "temporary_key" VARCHAR (40),
-    "profile_picture" VARCHAR (100),
+    "profile_picture_path" VARCHAR (300),
     "registration_status" VARCHAR (20) NOT NULL
 );
 

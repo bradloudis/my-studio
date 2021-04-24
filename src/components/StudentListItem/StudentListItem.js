@@ -17,12 +17,9 @@ class StudentListItem extends Component {
       <Card>
         <CardContent>
           <CardActionArea onClick={this.handleStudentClick}>
-            {this.props.student.profile_picture ? (
+            {this.props.student.profile_picture_path ? (
               <img
-                src={
-                  process.env.PUBLIC_URL +
-                  `${this.props.student.profile_picture}`
-                }
+                src={this.props.student.profile_picture_path}
                 alt="not found"
                 className="profilePicture"
               />

@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // CUSTOM COMPONENTS
 import CurrentAssignment from '../CurrentAssignment/CurrentAssignment';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 // MATERIAL UI
 import { Button, Grid, Container, Box } from '@material-ui/core';
@@ -12,12 +13,6 @@ class StudentHomePage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'GET_ASSIGNMENT_STUDENT' });
   }
-
-  handleEditClick = () => {
-    console.log('edit btn click');
-    console.log(new Date());
-    // TODO AWS S3 upload profile picture
-  };
 
   render() {
     return (
@@ -33,11 +28,11 @@ class StudentHomePage extends Component {
               <h3>{this.props.store.user.instrument}</h3>
             </Box>
             <Box>
-              {this.props.store.user.profile_picture ? (
+              {this.props.store.user.profile_picture_path ? (
                 <img
                   src={
                     process.env.PUBLIC_URL +
-                    `${this.props.store.user.profile_picture}`
+                    `${this.props.store.user.profile_picture_path}`
                   }
                   alt="not found"
                   className="profilePicture"
@@ -46,12 +41,12 @@ class StudentHomePage extends Component {
                 <img
                   src={process.env.PUBLIC_URL + '/blank-profile-picture.png'}
                   alt="not found"
-                  className="blankProfileImg"
+                  className="profilePicture"
                 />
               )}
             </Box>
-            <Button variant="contained" onClick={this.handleEditClick}>
-              EDIT
+            <Button variant="contained">
+              <ImageUpload />
             </Button>
           </Grid>
           <Grid item xs={6}>

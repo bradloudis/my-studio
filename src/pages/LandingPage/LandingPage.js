@@ -54,7 +54,7 @@ class LandingPage extends Component {
 
             <p>
               My Studio hopes to help simplify studio management for teachers
-              and sparks joy in the practice process for students.
+              and spark joy in the practice process for students.
             </p>
           </div>
           <div className="grid-col grid-col_4" className="formPanel">
